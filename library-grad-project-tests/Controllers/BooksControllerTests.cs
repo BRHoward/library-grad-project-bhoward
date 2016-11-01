@@ -96,10 +96,7 @@ namespace LibraryGradProjectTests.Controllers
 
             // Assert
             mockRepo.Verify(mock => mock.Get(It.Is<int>(x => x == 1)), Times.Once);
-            Assert.Equal(currentBook.Title, newBook.Title);
-            Assert.Equal(currentBook.Author, newBook.Author);
-            Assert.Equal(currentBook.ISBN, newBook.ISBN);
-            Assert.Equal(currentBook.PublishDate, newBook.PublishDate);
+            Assert.Equal(currentBook, newBook);
         }
 
         [Fact]
