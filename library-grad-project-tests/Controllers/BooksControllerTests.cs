@@ -87,7 +87,7 @@ namespace LibraryGradProjectTests.Controllers
             // Assert
             mockRepo.Verify(mock => mock.Get(It.Is<int>(x => x == 3)), Times.Once);
             mockRepo.Verify(mock => mock.Add(It.Is<Book>(b => b == newBook)), Times.Once);
-            Assert.Equal(newBook.Id, 3);
+            Assert.Equal(newBook.Id, 0);
         }
     }
 }
