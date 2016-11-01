@@ -14,9 +14,9 @@ namespace LibraryGradProject.Repos
         {
             _bookCollection = new List<Book>
             {
-                new Book {Title = "My First Book", ISBN = "11111", Author = "Andy Murray"},
-                new Book {Title = "Another Book", ISBN = "22222", Author = "Tim Henman"},
-                new Book {Title = "Yet more book", ISBN = "33333", Author = "Boris Becker"}
+                new Book {Id = 0, Title = "Tennis", ISBN = "11111", Author = "Andy Murray", PublishDate="01/01/2001"},
+                new Book {Id = 1, Title = "All about tennis", ISBN = "22222", Author = "Tim Henman", PublishDate="02/02/2002"},
+                new Book {Id = 2, Title = "Yeah tennis", ISBN = "33333", Author = "Boris Becker", PublishDate="03/03/2003"}
             };
         }
 
