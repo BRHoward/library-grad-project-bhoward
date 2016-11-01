@@ -9,7 +9,7 @@ namespace LibraryGradProject.Repos
     public class FilledBookRepository : IRepository<Book>
     {
         private List<Book> _bookCollection;
-        private static int currentId;
+        private int currentId;
 
         public FilledBookRepository()
         {
