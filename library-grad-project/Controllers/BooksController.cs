@@ -45,7 +45,6 @@ namespace LibraryGradProject.Controllers
             Book bookToUpdate =_bookRepo.Get(id);
             if (bookToUpdate != null)
             {
-                bookToUpdate.Id = id;
                 bookToUpdate.Title = newBook.Title;
                 bookToUpdate.Author = newBook.Author;
                 bookToUpdate.ISBN = newBook.ISBN;
