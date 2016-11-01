@@ -40,10 +40,11 @@ namespace LibraryGradProject.Controllers
         }
 
         // PUT api/values/{int}
-        public void Put(Book newBook)
+        public void Put(Book newBook, int id)
         {
-            // TODO
-            throw new NotImplementedException();
+            _bookRepo.Remove(id);
+            _bookRepo.Add(newBook);
+            newBook.Id = id;
         }
     }
 }
