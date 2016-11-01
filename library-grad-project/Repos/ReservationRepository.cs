@@ -8,25 +8,30 @@ namespace LibraryGradProject.Repos
 {
     public class ReservationRepository : IRepository<Reservation>
     {
+        private List<Reservation> _reservationCollection = new List<Reservation>();
+        private int currentId = 0;
 
         public void Add(Reservation entity)
         {
-            throw new NotImplementedException();
-        }
-
-        public Reservation Get(int id)
-        {
-            throw new NotImplementedException();
+            entity.Id = currentId;
+            currentId++;
+            _reservationCollection.Add(entity);
         }
 
         public IEnumerable<Reservation> GetAll()
         {
-            throw new NotImplementedException();
+            return _reservationCollection;
+        }
+
+        public Reservation Get(int id)
+        {
+            return _reservationCollection.Where(reservation => reservation.Id == id).SingleOrDefault();
         }
 
         public void Remove(int id)
         {
-            throw new NotImplementedException();
+            Reservation reservationToRemove = Get(id);
+            _reservationCollection.Remove(reservationToRemove);
         }
     }
 }
