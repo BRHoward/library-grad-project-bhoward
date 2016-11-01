@@ -69,5 +69,56 @@ namespace LibraryGradProjectTests.Controllers
             // Assert
             mockRepo.Verify(mock => mock.Remove(It.Is<int>(x => x == 1)), Times.Once);
         }
+
+        [Fact]
+        public void Put_With_Book_And_Id_Calls_Get_And_Updates_Book()
+        {
+            // Arrange
+            Book currentBook = new Book()
+            {
+                Title = "Old title",
+                Author = "Old Author",
+                ISBN = "11111",
+                PublishDate = "2000"
+            };
+            Book newBook = new Book() {
+                Title = "New title",
+                Author = "New Author",
+                ISBN = "22222",
+                PublishDate = "2001"
+            };
+            var mockRepo = new Mock<IRepository<Book>>();
+            mockRepo.Setup(mock => mock.Get(It.IsAny<int>())).Returns(currentBook);
+            BooksController controller = new BooksController(mockRepo.Object);
+
+            // Act
+            controller.Put(newBook, 1);
+
+            // Assert
+            mockRepo.Verify(mock => mock.Get(It.Is<int>(x => x == 1)), Times.Once);
+            Assert.Equal(currentBook.Title, newBook.Title);
+            Assert.Equal(currentBook.Author, newBook.Author);
+            Assert.Equal(currentBook.ISBN, newBook.ISBN);
+            Assert.Equal(currentBook.PublishDate, newBook.PublishDate);
+        }
+
+        [Fact]
+        public void Put_With_Incorrect_Id_Calls_Repo_Add()
+        {
+            // Arrange
+            var mockRepo = new Mock<IRepository<Book>>();
+            mockRepo.Setup(mock => mock.Get(It.IsAny<int>()));
+            mockRepo.Setup(mock => mock.Add(It.IsAny<Book>()));
+            BooksController controller = new BooksController(mockRepo.Object);
+
+            Book newBook = new Book() { Title = "Test" };
+
+            // Act
+            controller.Put(newBook, 3);
+
+            // Assert
+            mockRepo.Verify(mock => mock.Get(It.Is<int>(x => x == 3)), Times.Once);
+            mockRepo.Verify(mock => mock.Add(It.Is<Book>(b => b == newBook)), Times.Once);
+        }
     }
 }

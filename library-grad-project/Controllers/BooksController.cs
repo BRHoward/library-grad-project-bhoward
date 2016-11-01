@@ -21,29 +21,39 @@ namespace LibraryGradProject.Controllers
             return _bookRepo.GetAll();
         }
 
-        // GET api/values/{int}
+        // GET api/books/{int}
         public Book Get(int id)
         {
             return _bookRepo.Get(id);
         }
 
-        // POST api/values
+        // POST api/books
         public void Post(Book newBook)
         {
             _bookRepo.Add(newBook);
         }
         
-        // DELETE api/values/{int}
+        // DELETE api/books/{int}
         public void Delete(int id)
         {
             _bookRepo.Remove(id);
         }
 
-        // PUT api/values/{int}
-        public void Put(Book newBook)
+        // PUT api/books/{int}
+        public void Put(Book newBook, int id)
         {
-            // TODO
-            throw new NotImplementedException();
+            Book bookToUpdate =_bookRepo.Get(id);
+            if (bookToUpdate != null)
+            {
+                bookToUpdate.Id = id;
+                bookToUpdate.Title = newBook.Title;
+                bookToUpdate.Author = newBook.Author;
+                bookToUpdate.ISBN = newBook.ISBN;
+                bookToUpdate.PublishDate = newBook.PublishDate;
+            } else
+            {
+                _bookRepo.Add(newBook);
+            }
         }
     }
 }
