@@ -71,12 +71,12 @@ namespace LibraryGradProjectTests.Controllers
         }
 
         [Fact]
-        public void Put_With_Book_And_Id_Calls_Remove_And_Add()
+        public void Put_With_Book_And_Id_Calls_Get_And_Add()
         {
             // Arrange
             var mockRepo = new Mock<IRepository<Book>>();
             mockRepo.Setup(mock => mock.Add(It.IsAny<Book>()));
-            mockRepo.Setup(mock => mock.Remove(It.IsAny<int>()));
+            mockRepo.Setup(mock => mock.Get(It.IsAny<int>()));
             BooksController controller = new BooksController(mockRepo.Object);
 
             Book newBook = new Book() { Title = "Test"};
@@ -85,7 +85,7 @@ namespace LibraryGradProjectTests.Controllers
             controller.Put(newBook, 3);
 
             // Assert
-            mockRepo.Verify(mock => mock.Remove(It.Is<int>(x => x == 3)), Times.Once);
+            mockRepo.Verify(mock => mock.Get(It.Is<int>(x => x == 3)), Times.Once);
             mockRepo.Verify(mock => mock.Add(It.Is<Book>(b => b == newBook)), Times.Once);
             Assert.Equal(newBook.Id, 3);
         }

@@ -42,9 +42,18 @@ namespace LibraryGradProject.Controllers
         // PUT api/books/{int}
         public void Put(Book newBook, int id)
         {
-            _bookRepo.Remove(id);
-            _bookRepo.Add(newBook);
-            newBook.Id = id;
+            Book bookToUpdate =_bookRepo.Get(id);
+            if (bookToUpdate != null)
+            {
+                bookToUpdate.Id = newBook.Id;
+                bookToUpdate.Author = newBook.Author;
+                bookToUpdate.ISBN = newBook.ISBN;
+                bookToUpdate.PublishDate = newBook.PublishDate;
+            } else
+            {
+                _bookRepo.Add(newBook);
+                newBook.Id = id;
+            }
         }
     }
 }
