@@ -9,6 +9,7 @@ namespace LibraryGradProject.Repos
     public class FilledBookRepository : IRepository<Book>
     {
         private List<Book> _bookCollection;
+        private static int currentId;
 
         public FilledBookRepository()
         {
@@ -18,11 +19,13 @@ namespace LibraryGradProject.Repos
                 new Book {Id = 1, Title = "All about tennis", ISBN = "22222", Author = "Tim Henman", PublishDate="02/02/2002"},
                 new Book {Id = 2, Title = "Yeah tennis", ISBN = "33333", Author = "Boris Becker", PublishDate="03/03/2003"}
             };
+            currentId = 3;
         }
 
         public void Add(Book entity)
         {
-            entity.Id = _bookCollection.Count;
+            entity.Id = currentId;
+            currentId++;
             _bookCollection.Add(entity);
         }
 

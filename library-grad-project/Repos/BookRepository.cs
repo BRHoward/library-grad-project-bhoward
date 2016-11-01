@@ -7,10 +7,12 @@ namespace LibraryGradProject.Repos
     public class BookRepository : IRepository<Book>
     {
         private List<Book> _bookCollection = new List<Book>();
+        private static int currentId = 0;
 
         public void Add(Book entity)
         {
-            entity.Id = _bookCollection.Count;
+            entity.Id = currentId;
+            currentId++;
             _bookCollection.Add(entity);
         }
 
