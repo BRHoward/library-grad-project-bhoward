@@ -20,7 +20,7 @@ namespace LibraryGradProject.Models
                 return false;
             }
 
-            // If parameter cannot be cast to book return false.
+            // If parameter cannot be cast to reservation return false.
             Reservation p = obj as Reservation;
             if ((System.Object)p == null)
             {
