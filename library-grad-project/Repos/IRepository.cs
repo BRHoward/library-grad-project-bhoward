@@ -8,5 +8,6 @@ namespace LibraryGradProject.Repos
         IEnumerable<T> GetAll();
         void Add(T entity);
         void Remove(int id);
+        void Update(T entity, int id);
     }
 }

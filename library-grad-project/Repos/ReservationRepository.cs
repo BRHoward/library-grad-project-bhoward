@@ -13,9 +13,17 @@ namespace LibraryGradProject.Repos
 
         public void Add(Reservation entity)
         {
-            entity.Id = currentId;
-            currentId++;
-            _reservationCollection.Add(entity);
+            if (reservationValid(entity))
+            {
+                entity.Id = currentId;
+                currentId++;
+                _reservationCollection.Add(entity);
+            }
+            else
+            {
+                throw new InvalidOperationException("Book already reserved at that time");
+            };
+
         }
 
         public IEnumerable<Reservation> GetAll()
@@ -32,6 +40,43 @@ namespace LibraryGradProject.Repos
         {
             Reservation reservationToRemove = Get(id);
             _reservationCollection.Remove(reservationToRemove);
+        }
+
+        public void Update(Reservation newReservation, int id)
+        {
+            Reservation reservationToUpdate = Get(id);
+            if (!reservationValid(newReservation))
+            {
+                throw new InvalidOperationException("Book already reserved at that time");
+            }
+            if (reservationToUpdate != null)
+            {
+                reservationToUpdate.bookId = newReservation.bookId;
+                reservationToUpdate.StartDate = newReservation.StartDate;
+                reservationToUpdate.EndDate = newReservation.EndDate;
+            }
+            else
+            {
+                Add(newReservation);
+            }
+        }
+
+        private bool reservationValid(Reservation newReservation)
+        {
+            bool valid = true;
+
+            foreach (Reservation res in _reservationCollection)
+            {
+                if (res.bookId == newReservation.bookId &&
+                    res.StartDate < newReservation.EndDate && 
+                    newReservation.StartDate < res.EndDate)
+                {
+                    valid = false;
+                    break;
+                }
+            }
+
+            return valid;
         }
     }
 }

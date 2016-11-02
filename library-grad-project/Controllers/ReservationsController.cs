@@ -30,9 +30,17 @@ namespace LibraryGradProject.Controllers
         }
 
         // POST api/reservations
-        public void Post(Reservation newReservation)
+        public IHttpActionResult Post(Reservation newReservation)
         {
-            _reservationRepo.Add(newReservation);
+            try
+            {
+                _reservationRepo.Add(newReservation);
+                return Ok();
+            }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
+            }
         }
 
         // DELETE api/reservations/{int}
@@ -42,19 +50,19 @@ namespace LibraryGradProject.Controllers
         }
 
         // PUT api/reservations/{int}
-        public void Put(Reservation newReservation, int id)
+        public IHttpActionResult Put(Reservation newReservation, int id)
         {
-            Reservation reservationToUpdate = _reservationRepo.Get(id);
-            if (reservationToUpdate != null)
-            {   
-                reservationToUpdate.bookId = newReservation.bookId;
-                reservationToUpdate.StartDate = newReservation.StartDate;
-                reservationToUpdate.EndDate = newReservation.EndDate;
-            }
-            else
+
+            try
             {
-                _reservationRepo.Add(newReservation);
+                _reservationRepo.Update(newReservation, id);
+                return Ok();
             }
+            catch (InvalidOperationException e)
+            {
+                return BadRequest(e.Message);
+            }
+            
         }
     }
 }
