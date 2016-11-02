@@ -1,5 +1,6 @@
 ﻿using LibraryGradProject.Models;
 using LibraryGradProject.Repos;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -130,6 +131,54 @@ namespace LibraryGradProjectTests.Repos
 
             // Asert
             Assert.Equal(new Reservation[] { newReservation }, Reservations.ToArray());
+        }
+
+        [Fact]
+        public void Add_Doesnt_Insert_If_Times_Clash()
+        {
+            // Arrange
+            ReservationRepository repo = new ReservationRepository();
+            Reservation Reservation1 = new Reservation()
+            {
+                bookId = 1,
+                StartDate = new System.DateTime(2016, 1, 1, 1, 0, 0),
+                EndDate = new System.DateTime(2016, 1, 1, 2, 0, 0),
+            };
+            Reservation Reservation2 = new Reservation()
+            {
+                bookId = 1,
+                StartDate = new System.DateTime(2016, 1, 1, 1, 30, 0),
+                EndDate = new System.DateTime(2016, 1, 1, 2, 30, 0),
+            };
+
+            repo.Add(Reservation1);
+            Assert.Throws<InvalidOperationException>(() => repo.Add(Reservation2));
+            IEnumerable<Reservation> Reservations = repo.GetAll();
+            Assert.Equal(new Reservation[] { Reservation1 }, Reservations.ToArray());
+        }
+
+        [Fact]
+        public void Put_Doesnt_Update_If_Times_Clash()
+        {
+            // Arrange
+            ReservationRepository repo = new ReservationRepository();
+            Reservation Reservation1 = new Reservation()
+            {
+                bookId = 1,
+                StartDate = new System.DateTime(2016, 1, 1, 1, 0, 0),
+                EndDate = new System.DateTime(2016, 1, 1, 2, 0, 0),
+            };
+            Reservation Reservation2 = new Reservation()
+            {
+                bookId = 1,
+                StartDate = new System.DateTime(2016, 1, 1, 1, 30, 0),
+                EndDate = new System.DateTime(2016, 1, 1, 2, 30, 0),
+            };
+            repo.Add(Reservation1);
+
+            Assert.Throws<InvalidOperationException>(() => repo.Update(Reservation2, 0));
+            IEnumerable<Reservation> Reservations = repo.GetAll();
+            Assert.Equal(new Reservation[] { Reservation1 }, Reservations.ToArray());
         }
     }
 }
