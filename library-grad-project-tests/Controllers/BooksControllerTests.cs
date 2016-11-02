@@ -71,7 +71,7 @@ namespace LibraryGradProjectTests.Controllers
         }
 
         [Fact]
-        public void Put_With_Book_And_Id_Calls_Get_And_Updates_Book()
+        public void Put_With_Book_And_Id_Calls_Update()
         {
             // Arrange
             Book currentBook = new Book()
@@ -88,34 +88,17 @@ namespace LibraryGradProjectTests.Controllers
                 PublishDate = "2001"
             };
             var mockRepo = new Mock<IRepository<Book>>();
-            mockRepo.Setup(mock => mock.Get(It.IsAny<int>())).Returns(currentBook);
+            mockRepo.Setup(mock => mock.Update(It.IsAny<Book>(), It.IsAny<int>()));
             BooksController controller = new BooksController(mockRepo.Object);
 
             // Act
             controller.Put(newBook, 1);
 
             // Assert
-            mockRepo.Verify(mock => mock.Get(It.Is<int>(x => x == 1)), Times.Once);
-            Assert.Equal(currentBook, newBook);
-        }
-
-        [Fact]
-        public void Put_With_Incorrect_Id_Calls_Repo_Add()
-        {
-            // Arrange
-            var mockRepo = new Mock<IRepository<Book>>();
-            mockRepo.Setup(mock => mock.Get(It.IsAny<int>()));
-            mockRepo.Setup(mock => mock.Add(It.IsAny<Book>()));
-            BooksController controller = new BooksController(mockRepo.Object);
-
-            Book newBook = new Book() { Title = "Test" };
-
-            // Act
-            controller.Put(newBook, 3);
-
-            // Assert
-            mockRepo.Verify(mock => mock.Get(It.Is<int>(x => x == 3)), Times.Once);
-            mockRepo.Verify(mock => mock.Add(It.Is<Book>(b => b == newBook)), Times.Once);
+            mockRepo.Verify(mock => mock.Update(
+                It.Is<Book>(b => b == newBook),
+                It.Is<int>(x => x == 1)),
+                Times.Once);
         }
     }
 }
