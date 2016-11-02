@@ -74,13 +74,6 @@ namespace LibraryGradProjectTests.Controllers
         public void Put_With_Book_And_Id_Calls_Update()
         {
             // Arrange
-            Book currentBook = new Book()
-            {
-                Title = "Old title",
-                Author = "Old Author",
-                ISBN = "11111",
-                PublishDate = "2000"
-            };
             Book newBook = new Book() {
                 Title = "New title",
                 Author = "New Author",
