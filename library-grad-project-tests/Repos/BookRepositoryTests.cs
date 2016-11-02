@@ -104,5 +104,34 @@ namespace LibraryGradProjectTests.Repos
             // Asert
             Assert.Equal(new Book[] { newBook1, newBook3 }, books.ToArray());
         }
+
+        [Fact]
+        public void Update_updates_Correct_Book()
+        {
+            // Arrange
+            BookRepository repo = new BookRepository();
+            Book newBook = new Book()
+            {
+                Title = "New title",
+                Author = "New Author",
+                ISBN = "22222",
+                PublishDate = "2001"
+            };
+            Book oldBook = new Book()
+            {
+                Title = "Old title",
+                Author = "Old Author",
+                ISBN = "11111",
+                PublishDate = "2000"
+            };
+            repo.Add(oldBook);
+
+            // Act
+            repo.Update(newBook, 0);
+            IEnumerable<Book> books = repo.GetAll();
+
+            // Asert
+            Assert.Equal(new Book[] {newBook}, books.ToArray());
+        }
     }
 }
