@@ -182,6 +182,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\ReservationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -191,6 +192,7 @@
     <Compile Include="Repos\BookRepository.cs" />
     <Compile Include="Repos\FilledBookRepository.cs" />
     <Compile Include="Repos\IRepository.cs" />
+    <Compile Include="Repos\ReservationRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

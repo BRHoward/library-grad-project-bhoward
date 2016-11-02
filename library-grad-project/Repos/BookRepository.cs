@@ -31,5 +31,21 @@ namespace LibraryGradProject.Repos
             Book bookToRemove = Get(id);
             _bookCollection.Remove(bookToRemove);            
         }
+
+        public void Update(Book newBook, int id)
+        {
+            Book bookToUpdate = Get(id);
+            if (bookToUpdate != null)
+            {
+                bookToUpdate.Title = newBook.Title;
+                bookToUpdate.Author = newBook.Author;
+                bookToUpdate.ISBN = newBook.ISBN;
+                bookToUpdate.PublishDate = newBook.PublishDate;
+            }
+            else
+            {
+                Add(newBook);
+            }
+        }
     }
 }
