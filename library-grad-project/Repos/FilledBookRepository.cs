@@ -8,7 +8,6 @@ namespace LibraryGradProject.Repos
 {
     public class FilledBookRepository : IRepository<Book>
     {
-        private List<Book> _bookCollection = new List<Book>();
         private LibraryContext _dbContext;
 
         public FilledBookRepository(LibraryContext dbContext)
