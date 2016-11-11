@@ -1,10 +1,11 @@
-﻿using System;
+﻿using LibraryGradProject.Models;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
 
-namespace LibraryGradProject.Models
+namespace LibraryGradProject.Contexts
 {
     public class LibraryContext : DbContext
     {
