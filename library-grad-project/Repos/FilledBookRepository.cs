@@ -7,18 +7,17 @@ namespace LibraryGradProject.Repos
 {
     public class FilledBookRepository : IRepository<Book>
     {
-        private LibraryContext _dbContext;
+        private ILibraryContext _dbContext;
 
-        public FilledBookRepository(LibraryContext dbContext)
+        public FilledBookRepository(ILibraryContext dbContext)
         {
             _dbContext = dbContext;
-            foreach (var book in _dbContext.Books)
+            if (_dbContext.Books.Count() == 0)
             {
-                dbContext.Books.Remove(book);
+                _dbContext.Books.Add(new Book { Title = "Tennis", ISBN = "11111", Author = "Andy Murray", PublishDate = "01/01/2001" });
+                _dbContext.Books.Add(new Book { Title = "All about tennis", ISBN = "22222", Author = "Tim Henman", PublishDate = "02/02/2002" });
+                _dbContext.Books.Add(new Book { Title = "Yeah tennis", ISBN = "33333", Author = "Boris Becker", PublishDate = "03/03/2003" });
             }
-            _dbContext.Books.Add(new Book { Title = "Tennis", ISBN = "11111", Author = "Andy Murray", PublishDate = "01/01/2001" });
-            _dbContext.Books.Add(new Book { Title = "All about tennis", ISBN = "22222", Author = "Tim Henman", PublishDate = "02/02/2002" });
-            _dbContext.Books.Add(new Book { Title = "Yeah tennis", ISBN = "33333", Author = "Boris Becker", PublishDate = "03/03/2003" });
             _dbContext.SaveChanges();
         }
 
