@@ -1,4 +1,5 @@
-﻿using LibraryGradProject.Models;
+﻿using LibraryGradProject.Contexts;
+using LibraryGradProject.Models;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,30 +7,37 @@ namespace LibraryGradProject.Repos
 {
     public class BookRepository : IRepository<Book>
     {
-        private List<Book> _bookCollection = new List<Book>();
-        private int currentId = 0;
+        private ILibraryContext _dbContext;
+
+        public BookRepository(ILibraryContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
         public void Add(Book entity)
         {
-            entity.Id = currentId;
-            currentId++;
-            _bookCollection.Add(entity);
+            _dbContext.Books.Add(entity);
+            _dbContext.SaveChanges();
         }
 
         public IEnumerable<Book> GetAll()
         {
-            return _bookCollection;
+            return _dbContext.Books.OrderBy(b => b.Id).ToList();
         }
 
         public Book Get(int id)
         {
-            return _bookCollection.Where(book => book.Id == id).SingleOrDefault();
+            return _dbContext.Books
+                .OrderBy(b => b.Id)
+                .Where(b => b.Id == id)
+                .SingleOrDefault();
         }
 
         public void Remove(int id)
         {
             Book bookToRemove = Get(id);
-            _bookCollection.Remove(bookToRemove);            
+            _dbContext.Books.Remove(bookToRemove);
+            _dbContext.SaveChanges();
         }
 
         public void Update(Book newBook, int id)
@@ -41,6 +49,7 @@ namespace LibraryGradProject.Repos
                 bookToUpdate.Author = newBook.Author;
                 bookToUpdate.ISBN = newBook.ISBN;
                 bookToUpdate.PublishDate = newBook.PublishDate;
+                _dbContext.SaveChanges();
             }
             else
             {

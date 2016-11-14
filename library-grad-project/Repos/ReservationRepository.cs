@@ -1,4 +1,5 @@
-﻿using LibraryGradProject.Models;
+﻿using LibraryGradProject.Contexts;
+using LibraryGradProject.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,16 +9,19 @@ namespace LibraryGradProject.Repos
 {
     public class ReservationRepository : IRepository<Reservation>
     {
-        private List<Reservation> _reservationCollection = new List<Reservation>();
-        private int currentId = 0;
+        private ILibraryContext _dbContext;
+
+        public ReservationRepository (ILibraryContext dbContext)
+        {
+            _dbContext = dbContext;
+        }
 
         public void Add(Reservation entity)
         {
             if (reservationValid(entity))
             {
-                entity.Id = currentId;
-                currentId++;
-                _reservationCollection.Add(entity);
+                _dbContext.Reservations.Add(entity);
+                _dbContext.SaveChanges();
             }
             else
             {
@@ -28,18 +32,22 @@ namespace LibraryGradProject.Repos
 
         public IEnumerable<Reservation> GetAll()
         {
-            return _reservationCollection;
+            return _dbContext.Reservations.OrderBy(r => r.Id).ToList();
         }
 
         public Reservation Get(int id)
         {
-            return _reservationCollection.Where(reservation => reservation.Id == id).SingleOrDefault();
+            return _dbContext.Reservations
+                .OrderBy(b => b.Id)
+                .Where(b => b.Id == id)
+                .SingleOrDefault();
         }
 
         public void Remove(int id)
         {
             Reservation reservationToRemove = Get(id);
-            _reservationCollection.Remove(reservationToRemove);
+            _dbContext.Reservations.Remove(reservationToRemove);
+            _dbContext.SaveChanges();
         }
 
         public void Update(Reservation newReservation, int id)
@@ -54,6 +62,7 @@ namespace LibraryGradProject.Repos
                 reservationToUpdate.bookId = newReservation.bookId;
                 reservationToUpdate.StartDate = newReservation.StartDate;
                 reservationToUpdate.EndDate = newReservation.EndDate;
+                _dbContext.SaveChanges();
             }
             else
             {
@@ -65,17 +74,16 @@ namespace LibraryGradProject.Repos
         {
             bool valid = true;
 
-            foreach (Reservation res in _reservationCollection)
+            foreach (var res in _dbContext.Reservations.OrderBy(r => r.Id).ToList())
             {
                 if (res.bookId == newReservation.bookId &&
-                    res.StartDate < newReservation.EndDate && 
+                    res.StartDate < newReservation.EndDate &&
                     newReservation.StartDate < res.EndDate)
                 {
                     valid = false;
                     break;
                 }
             }
-
             return valid;
         }
     }

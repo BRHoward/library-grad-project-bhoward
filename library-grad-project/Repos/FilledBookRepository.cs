@@ -1,48 +1,50 @@
-﻿using LibraryGradProject.Models;
-using System;
+﻿using LibraryGradProject.Contexts;
+using LibraryGradProject.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace LibraryGradProject.Repos
 {
     public class FilledBookRepository : IRepository<Book>
     {
-        private List<Book> _bookCollection;
-        private int currentId;
+        private ILibraryContext _dbContext;
 
-        public FilledBookRepository()
+        public FilledBookRepository(ILibraryContext dbContext)
         {
-            _bookCollection = new List<Book>
+            _dbContext = dbContext;
+            if (_dbContext.Books.Count() == 0)
             {
-                new Book {Id = 0, Title = "Tennis", ISBN = "11111", Author = "Andy Murray", PublishDate="01/01/2001"},
-                new Book {Id = 1, Title = "All about tennis", ISBN = "22222", Author = "Tim Henman", PublishDate="02/02/2002"},
-                new Book {Id = 2, Title = "Yeah tennis", ISBN = "33333", Author = "Boris Becker", PublishDate="03/03/2003"}
-            };
-            currentId = 3;
+                _dbContext.Books.Add(new Book { Title = "Tennis", ISBN = "11111", Author = "Andy Murray", PublishDate = "01/01/2001" });
+                _dbContext.Books.Add(new Book { Title = "All about tennis", ISBN = "22222", Author = "Tim Henman", PublishDate = "02/02/2002" });
+                _dbContext.Books.Add(new Book { Title = "Yeah tennis", ISBN = "33333", Author = "Boris Becker", PublishDate = "03/03/2003" });
+            }
+            _dbContext.SaveChanges();
         }
 
         public void Add(Book entity)
         {
-            entity.Id = currentId;
-            currentId++;
-            _bookCollection.Add(entity);
+            _dbContext.Books.Add(entity);
+            _dbContext.SaveChanges();
         }
 
         public IEnumerable<Book> GetAll()
         {
-            return _bookCollection;
+            return _dbContext.Books.OrderBy(b => b.Id).ToList();
         }
 
         public Book Get(int id)
         {
-            return _bookCollection.Where(book => book.Id == id).SingleOrDefault();
+            return _dbContext.Books
+                .OrderBy(b => b.Id)
+                .Where(b => b.Id == id)
+                .SingleOrDefault();
         }
 
         public void Remove(int id)
         {
             Book bookToRemove = Get(id);
-            _bookCollection.Remove(bookToRemove);
+            _dbContext.Books.Remove(bookToRemove);
+            _dbContext.SaveChanges();
         }
 
         public void Update(Book newBook, int id)
@@ -54,6 +56,7 @@ namespace LibraryGradProject.Repos
                 bookToUpdate.Author = newBook.Author;
                 bookToUpdate.ISBN = newBook.ISBN;
                 bookToUpdate.PublishDate = newBook.PublishDate;
+                _dbContext.SaveChanges();
             }
             else
             {
