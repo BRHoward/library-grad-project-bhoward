@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import BookList from './BookList';
 import ReservationList from './ReservationList';
-import './App.css';
 
 class App extends Component {
   constructor() {
