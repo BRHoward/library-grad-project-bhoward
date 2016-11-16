@@ -29,7 +29,7 @@ class BookListItem extends React.Component{
 	}
 
 	deleteBook () {
-		this.props.deleteBook(this.props.book.Id);
+		this.props.deleteBook(this.props.book.Id); 
 	}
 
 	updateBook(newBook) {

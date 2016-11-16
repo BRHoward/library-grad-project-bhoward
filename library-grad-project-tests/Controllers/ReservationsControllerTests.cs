@@ -49,8 +49,8 @@ namespace LibraryGradProjectTests.Controllers
             Reservation newReservation = new Reservation()
             {
                 bookId = 1,
-                StartDate = new System.DateTime(2016, 1, 1, 1, 0, 0),
-                EndDate = new System.DateTime(2016, 1, 1, 2, 0, 0),
+                startDate = new System.DateTime(2016, 1, 1, 1, 0, 0),
+                endDate = new System.DateTime(2016, 1, 1, 2, 0, 0),
             };
 
             // Act
@@ -82,8 +82,8 @@ namespace LibraryGradProjectTests.Controllers
             Reservation newReservation = new Reservation()
             {
                 bookId = 1,
-                StartDate = new System.DateTime(2016, 1, 1, 1, 0, 0),
-                EndDate = new System.DateTime(2016, 1, 1, 2, 0, 0),
+                startDate = new System.DateTime(2016, 1, 1, 1, 0, 0),
+                endDate = new System.DateTime(2016, 1, 1, 2, 0, 0),
             };
             var mockRepo = new Mock<IRepository<Reservation>>();
             mockRepo.Setup(mock => mock.Update(It.IsAny<Reservation>(), It.IsAny<int>()));

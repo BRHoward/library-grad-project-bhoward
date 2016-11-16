@@ -3,10 +3,10 @@
     public class Book
     {
         public int Id { get; set; }
-        public string ISBN { get; set; }
-        public string Title { get; set; }
-        public string Author { get; set; }
-        public string PublishDate { get; set; }
+        public string isbn { get; set; }
+        public string title { get; set; }
+        public string author { get; set; }
+        public string publishDate { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -25,10 +25,10 @@
 
             // Return true if the fields match:
             return
-                (Title == p.Title) &&
-                (Author == p.Author) && 
-                (ISBN == p.ISBN)&& 
-                (PublishDate == p.PublishDate);
+                (title == p.title) &&
+                (author == p.author) && 
+                (isbn == p.isbn)&& 
+                (publishDate == p.publishDate);
         }
     }
 }

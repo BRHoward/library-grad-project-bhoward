@@ -45,10 +45,10 @@ namespace LibraryGradProject.Repos
             Book bookToUpdate = Get(id);
             if (bookToUpdate != null)
             {
-                bookToUpdate.Title = newBook.Title;
-                bookToUpdate.Author = newBook.Author;
-                bookToUpdate.ISBN = newBook.ISBN;
-                bookToUpdate.PublishDate = newBook.PublishDate;
+                bookToUpdate.title = newBook.title;
+                bookToUpdate.author = newBook.author;
+                bookToUpdate.isbn = newBook.isbn;
+                bookToUpdate.publishDate = newBook.publishDate;
                 _dbContext.SaveChanges();
             }
             else

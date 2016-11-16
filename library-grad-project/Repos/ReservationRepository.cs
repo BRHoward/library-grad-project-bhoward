@@ -60,8 +60,8 @@ namespace LibraryGradProject.Repos
             if (reservationToUpdate != null)
             {
                 reservationToUpdate.bookId = newReservation.bookId;
-                reservationToUpdate.StartDate = newReservation.StartDate;
-                reservationToUpdate.EndDate = newReservation.EndDate;
+                reservationToUpdate.startDate = newReservation.startDate;
+                reservationToUpdate.endDate = newReservation.endDate;
                 _dbContext.SaveChanges();
             }
             else
@@ -77,8 +77,8 @@ namespace LibraryGradProject.Repos
             foreach (var res in _dbContext.Reservations.OrderBy(r => r.Id).ToList())
             {
                 if (res.bookId == newReservation.bookId &&
-                    res.StartDate < newReservation.EndDate &&
-                    newReservation.StartDate < res.EndDate)
+                    res.startDate < newReservation.endDate &&
+                    newReservation.startDate < res.endDate)
                 {
                     valid = false;
                     break;

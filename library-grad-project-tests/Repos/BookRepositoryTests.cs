@@ -29,7 +29,7 @@ namespace LibraryGradProjectTests.Repos
             // Arrange
             LibraryContextMock mockContext = new LibraryContextMock();
             BookRepository repo = new BookRepository(mockContext);
-            Book newBook = new Book() { Title = "Test" };
+            Book newBook = new Book() { title = "Test" };
 
             // Act
             repo.Add(newBook);
@@ -45,8 +45,8 @@ namespace LibraryGradProjectTests.Repos
             // Arrange
             LibraryContextMock mockContext = new LibraryContextMock();
             BookRepository repo = new BookRepository(mockContext);
-            Book newBook1 = new Book() { Id = 0, Title = "Test1" };
-            Book newBook2 = new Book() { Id = 1, Title = "Test2" };
+            Book newBook1 = new Book() { Id = 0, title = "Test1" };
+            Book newBook2 = new Book() { Id = 1, title = "Test2" };
             repo.Add(newBook1);
             repo.Add(newBook2);
 
@@ -63,8 +63,8 @@ namespace LibraryGradProjectTests.Repos
             // Arrange
             LibraryContextMock mockContext = new LibraryContextMock();
             BookRepository repo = new BookRepository(mockContext); ;
-            Book newBook1 = new Book() { Title = "Test1" };
-            Book newBook2 = new Book() { Title = "Test2" };
+            Book newBook1 = new Book() { title = "Test1" };
+            Book newBook2 = new Book() { title = "Test2" };
             repo.Add(newBook1);
             repo.Add(newBook2);
 
@@ -81,9 +81,9 @@ namespace LibraryGradProjectTests.Repos
             // Arrange
             LibraryContextMock mockContext = new LibraryContextMock();
             BookRepository repo = new BookRepository(mockContext);
-            Book newBook1 = new Book() {Id = 0, Title = "Test1" };
-            Book newBook2 = new Book() {Id = 1, Title = "Test2" };
-            Book newBook3 = new Book() {Id = 2, Title = "Test3" };
+            Book newBook1 = new Book() {Id = 0, title = "Test1" };
+            Book newBook2 = new Book() {Id = 1, title = "Test2" };
+            Book newBook3 = new Book() {Id = 2, title = "Test3" };
             repo.Add(newBook1);
             repo.Add(newBook2);
             repo.Add(newBook3);
@@ -104,17 +104,17 @@ namespace LibraryGradProjectTests.Repos
             BookRepository repo = new BookRepository(mockContext);
             Book newBook = new Book()
             {
-                Title = "New title",
-                Author = "New Author",
-                ISBN = "22222",
-                PublishDate = "2001"
+                title = "New title",
+                author = "New author",
+                isbn = "22222",
+                publishDate = "2001"
             };
             Book oldBook = new Book()
             {
-                Title = "Old title",
-                Author = "Old Author",
-                ISBN = "11111",
-                PublishDate = "2000"
+                title = "Old title",
+                author = "Old author",
+                isbn = "11111",
+                publishDate = "2000"
             };
             repo.Add(oldBook);
 

@@ -14,9 +14,9 @@ namespace LibraryGradProject.Repos
             _dbContext = dbContext;
             if (_dbContext.Books.Count() == 0)
             {
-                _dbContext.Books.Add(new Book { Title = "Tennis", ISBN = "11111", Author = "Andy Murray", PublishDate = "01/01/2001" });
-                _dbContext.Books.Add(new Book { Title = "All about tennis", ISBN = "22222", Author = "Tim Henman", PublishDate = "02/02/2002" });
-                _dbContext.Books.Add(new Book { Title = "Yeah tennis", ISBN = "33333", Author = "Boris Becker", PublishDate = "03/03/2003" });
+                _dbContext.Books.Add(new Book { title = "Tennis", isbn = "11111", author = "Andy Murray", publishDate = "01/01/2001" });
+                _dbContext.Books.Add(new Book { title = "All about tennis", isbn = "22222", author = "Tim Henman", publishDate = "02/02/2002" });
+                _dbContext.Books.Add(new Book { title = "Yeah tennis", isbn = "33333", author = "Boris Becker", publishDate = "03/03/2003" });
             }
             _dbContext.SaveChanges();
         }
@@ -52,10 +52,10 @@ namespace LibraryGradProject.Repos
             Book bookToUpdate = Get(id);
             if (bookToUpdate != null)
             {
-                bookToUpdate.Title = newBook.Title;
-                bookToUpdate.Author = newBook.Author;
-                bookToUpdate.ISBN = newBook.ISBN;
-                bookToUpdate.PublishDate = newBook.PublishDate;
+                bookToUpdate.title = newBook.title;
+                bookToUpdate.author = newBook.author;
+                bookToUpdate.isbn = newBook.isbn;
+                bookToUpdate.publishDate = newBook.publishDate;
                 _dbContext.SaveChanges();
             }
             else
