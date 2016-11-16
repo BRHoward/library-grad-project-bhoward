@@ -9,8 +9,10 @@ class App extends Component {
       books : [],
       reservations : []
     }
+
+    this.addBook = this.addBook.bind(this);
   }
-  componentDidMount() {
+  getBooks() {
     fetch('/api/books')
       .then((response) => {
         return response.json();
@@ -19,7 +21,9 @@ class App extends Component {
         this.setState({
           books : data
         })
-      });
+    });
+  }
+  getReservations() {
     fetch('/api/reservations')
       .then((response) => {
         return response.json();
@@ -30,10 +34,28 @@ class App extends Component {
         })
       });
   }
+
+  addBook(book) {
+    fetch('/api/books', {
+        method: "POST",
+        headers: new Headers({
+            'Content-Type': 'application/JSON'
+        }),
+        body : JSON.stringify(book)
+    })
+        .then((response) => {
+            this.getBooks();
+        });
+  }
+
+  componentDidMount() {
+    this.getBooks();
+    this.getReservations();
+  }
   render() {
     return (
       <div>
-        <BookList books={this.state.books}/>
+        <BookList books={this.state.books} addBook={this.addBook}/>
         <ReservationList reservations={this.state.reservations}/>
       </div>
     );
