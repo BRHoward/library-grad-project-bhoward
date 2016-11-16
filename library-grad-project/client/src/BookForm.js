@@ -1,13 +1,13 @@
 import React from 'react';
 
-class AddBookForm extends React.Component {
-	constructor() {
-		super();
+class BookForm extends React.Component {
+	constructor(props) {
+		super(props);
 		this.state = {
-			title : "",
-			author : "",
-			publishDate : "",
-			isbn : ""
+			title : this.props.book.title,
+			author : this.props.book.author,
+			publishDate : this.props.book.publishDate,
+			isbn : this.props.book.isbn
 		}
 
 		this.handleTitleChange = this.handleTitleChange.bind(this);
@@ -44,6 +44,10 @@ class AddBookForm extends React.Component {
 	render () {
 		return (
 			<div>
+			{this.state.title}
+			{this.state.author}
+			{this.state.publishDate}
+			{this.state.isbn}
 				<form onSubmit={this.handleSubmit}>
 					Title: <input type="text" value={this.state.title} onChange={this.handleTitleChange}></input><br/>
 					Author: <input type="text" value={this.state.author} onChange={this.handleAuthorChange}></input><br/>
@@ -54,7 +58,15 @@ class AddBookForm extends React.Component {
 			</div>
 			);
 	}
-
 }
 
-export default AddBookForm;
+BookForm.defaultProps = {
+	book : {
+			title : "",
+			author : "",
+			publishDate : "",
+			isbn : ""
+		}
+}
+
+export default BookForm;

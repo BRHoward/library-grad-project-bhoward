@@ -1,6 +1,6 @@
 import React from 'react';
 import BookListItem from './BookListItem';
-import AddBookForm from './AddBookForm';
+import BookForm from './BookForm';
 
 class BookList extends React.Component {
 	constructor(props) {
@@ -8,6 +8,7 @@ class BookList extends React.Component {
 
 		this.addBook = this.addBook.bind(this);
 		this.deleteBook = this.deleteBook.bind(this);
+		this.updateBook = this.updateBook.bind(this);
 	}
 
 	addBook(data) {
@@ -18,15 +19,23 @@ class BookList extends React.Component {
 		this.props.deleteBook(id);
 	}
 
+	updateBook(id, book) {
+		this.props.updateBook(id, book);
+	}
+
 	render() {
 		return (
 			<div>
 				<ul>
 				{this.props.books.map(book => {
-					return <BookListItem key={book.Id} book={book} deleteBook={this.deleteBook}/>
+					return <BookListItem 
+						key={book.Id} 
+						book={book} 
+						deleteBook={this.deleteBook}
+						updateBook={this.updateBook}/>
 				})}
 				</ul>
-				<AddBookForm onSubmit={this.addBook}/>
+				<BookForm onSubmit={this.addBook}/>
 			</div>
 		);
 	} 
