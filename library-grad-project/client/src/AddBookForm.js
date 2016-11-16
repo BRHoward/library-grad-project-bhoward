@@ -44,15 +44,11 @@ class AddBookForm extends React.Component {
 	render () {
 		return (
 			<div>
-			{this.state.title}<br/>
-			{this.state.author}<br/>
-			{this.state.publishDate}<br/>
-			{this.state.isbn}<br/>
 				<form onSubmit={this.handleSubmit}>
-					Title: <input type="text" value={this.state.title} onChange={this.handleTitleChange}></input>
-					Author: <input type="text" value={this.state.author} onChange={this.handleAuthorChange}></input>
-					Publish Date: <input type="text" value={this.state.publishDate} onChange={this.handlePublishDateChange}></input>
-					ISBN: <input type="text" value={this.state.isbn} onChange={this.handleISBNChange}></input>
+					Title: <input type="text" value={this.state.title} onChange={this.handleTitleChange}></input><br/>
+					Author: <input type="text" value={this.state.author} onChange={this.handleAuthorChange}></input><br/>
+					Publish Date: <input type="text" value={this.state.publishDate} onChange={this.handlePublishDateChange}></input><br/>
+					ISBN: <input type="text" value={this.state.isbn} onChange={this.handleISBNChange}></input><br/>
 					<input type="submit"></input>
 				</form>
 			</div>

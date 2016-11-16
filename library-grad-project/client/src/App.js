@@ -3,14 +3,15 @@ import BookList from './BookList';
 import ReservationList from './ReservationList';
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       books : [],
       reservations : []
     }
 
     this.addBook = this.addBook.bind(this);
+    this.deleteBook = this.deleteBook.bind(this);
   }
   getBooks() {
     fetch('/api/books')
@@ -48,14 +49,24 @@ class App extends Component {
         });
   }
 
+  deleteBook(id) {
+    fetch('api/books/' + id, {
+        method : "DELETE"
+    })
+        .then ((response) => {
+            this.getBooks();
+        })
+  }
+
   componentDidMount() {
     this.getBooks();
     this.getReservations();
   }
+  
   render() {
     return (
       <div>
-        <BookList books={this.state.books} addBook={this.addBook}/>
+        <BookList books={this.state.books} addBook={this.addBook} deleteBook={this.deleteBook}/>
         <ReservationList reservations={this.state.reservations}/>
       </div>
     );
