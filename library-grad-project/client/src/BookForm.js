@@ -44,10 +44,6 @@ class BookForm extends React.Component {
 	render () {
 		return (
 			<div>
-			{this.state.title}
-			{this.state.author}
-			{this.state.publishDate}
-			{this.state.isbn}
 				<form onSubmit={this.handleSubmit}>
 					Title: <input type="text" value={this.state.title} onChange={this.handleTitleChange}></input><br/>
 					Author: <input type="text" value={this.state.author} onChange={this.handleAuthorChange}></input><br/>

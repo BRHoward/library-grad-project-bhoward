@@ -1,17 +1,21 @@
 import React from 'react';
 import BookForm from './BookForm';
+import ReservationForm from './ReservationForm';
 
 class BookListItem extends React.Component{
 	constructor(props) {
 		super(props);
 		this.state = {
 			expanded: false,
-			updating: false
+			updating: false,
+			reserving: false
 		}
 		this.toggleExpand = this.toggleExpand.bind(this);
 		this.toggleUpdating = this.toggleUpdating.bind(this);
+		this.toggleReserving = this.toggleReserving.bind(this);
 		this.deleteBook = this.deleteBook.bind(this);
 		this.updateBook = this.updateBook.bind(this);
+		this.addReservation = this.addReservation.bind(this);
 	}
 
 	toggleExpand () {
@@ -28,6 +32,13 @@ class BookListItem extends React.Component{
 		});
 	}
 
+	toggleReserving () {
+		let newState = !(this.state.reserving);
+		this.setState({
+			reserving : newState
+		});
+	}
+
 	deleteBook () {
 		this.props.deleteBook(this.props.book.Id); 
 	}
@@ -35,6 +46,10 @@ class BookListItem extends React.Component{
 	updateBook(newBook) {
 		this.toggleUpdating();
 		this.props.updateBook(this.props.book.Id, newBook)
+	}
+
+	addReservation(reservation) {
+		this.props.addReservation(reservation);
 	}
 
 	render () {
@@ -45,6 +60,7 @@ class BookListItem extends React.Component{
 		<button onClick={this.toggleExpand}>Expand</button>
 		<button onClick={this.deleteBook}>Delete</button>
 		<button onClick={this.toggleUpdating}>Update</button>
+		<button onClick={this.toggleReserving}>Reserve</button>
 		{this.state.expanded &&
 			<ul>
 				<li>Author - {this.props.book.author}</li>
@@ -55,6 +71,9 @@ class BookListItem extends React.Component{
 		</li>
 		{this.state.updating && 
 			<BookForm onSubmit={this.updateBook} book={this.props.book}/>
+		}
+		{this.state.reserving &&
+			<ReservationForm onSubmit={this.addReservation} bookId={this.props.book.Id}/>
 		}
 		</div>
 		);

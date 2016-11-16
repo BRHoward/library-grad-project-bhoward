@@ -1,6 +1,4 @@
-import React, {
-    Component
-} from 'react';
+import React, { Component } from 'react';
 import BookList from './BookList';
 import ReservationList from './ReservationList';
 
@@ -15,6 +13,10 @@ class App extends Component {
         this.addBook = this.addBook.bind(this);
         this.deleteBook = this.deleteBook.bind(this);
         this.updateBook = this.updateBook.bind(this);
+        this.addReservation = this.addReservation.bind(this);
+        this.deleteReservation = this.deleteReservation.bind(this);
+        this.updateReservation = this.updateReservation.bind(this);
+
     }
 
     getBooks() {
@@ -98,13 +100,13 @@ class App extends Component {
             })
     }
 
-    updateReservation(id, reservations) {
+    updateReservation(id, reservation) {
         fetch('api/reservations/' + id, {
                 method: 'PUT',
                 headers: new Headers({
                     'Content-Type': 'application/JSON'
                 }),
-                body: JSON.stringify(reservations)
+                body: JSON.stringify(reservation)
             })
             .then((response) => {
                 this.getReservations();

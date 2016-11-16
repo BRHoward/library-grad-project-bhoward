@@ -9,6 +9,7 @@ class BookList extends React.Component {
 		this.addBook = this.addBook.bind(this);
 		this.deleteBook = this.deleteBook.bind(this);
 		this.updateBook = this.updateBook.bind(this);
+		this.addReservation = this.addReservation.bind(this);
 	}
 
 	addBook(data) {
@@ -23,6 +24,10 @@ class BookList extends React.Component {
 		this.props.updateBook(id, book);
 	}
 
+	addReservation(reservation) {
+		this.props.addReservation(reservation);
+	}
+
 	render() {
 		return (
 			<div>
@@ -32,7 +37,8 @@ class BookList extends React.Component {
 						key={book.Id} 
 						book={book} 
 						deleteBook={this.deleteBook}
-						updateBook={this.updateBook}/>
+						updateBook={this.updateBook}
+						addReservation={this.addReservation}/>
 				})}
 				</ul>
 				<BookForm onSubmit={this.addBook}/>
