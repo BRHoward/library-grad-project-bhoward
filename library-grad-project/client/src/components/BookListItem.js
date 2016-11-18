@@ -56,7 +56,7 @@ class BookListItem extends React.Component{
 	return (
 		<div>
 		<li>
-		{this.props.book.title} 
+		{this.props.book.title} - {this.props.book.Id}
 		<button onClick={this.toggleExpand}>Expand</button>
 		<button onClick={this.deleteBook}>Delete</button>
 		<button onClick={this.toggleUpdating}>Update</button>

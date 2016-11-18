@@ -1,0 +1,5 @@
+export const ADD_BOOK = 'ADD_BOOK';
+export const DELETE_BOOK = 'DELETE_BOOK';
+export const UPDATE_BOOK = 'UPDATE_BOOK';
+export const ADD_RESERVATION = 'ADD_RESERVATION';
+export const DELETE_RESERVATION = 'DELETE_RESERVATION';

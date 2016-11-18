@@ -1,15 +1,10 @@
 import React, { Component } from 'react';
-import BookList from './BookList';
-import ReservationList from './ReservationList';
+import BookListContainer from '../containers/BookListContainer';
+import ReservationListContainer from '../containers/ReservationListContainer';
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            books: [],
-            reservations: []
-        }
-
         this.addBook = this.addBook.bind(this);
         this.deleteBook = this.deleteBook.bind(this);
         this.updateBook = this.updateBook.bind(this);
@@ -114,24 +109,17 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.getBooks();
-        this.getReservations();
+        //this.getBooks();
+        //this.getReservations();
     }
-
 
     render() {
         return ( 
             <div>
-            <BookList 
-            books={this.state.books}
-            addBook={this.addBook}
-            deleteBook={this.deleteBook}
-            updateBook={this.updateBook}
-            addReservation={this.addReservation}/> 
-
-            <ReservationList reservations={this.state.reservations}/> 
+            <BookListContainer/>
+            <ReservationListContainer/>
             </div>
-        );
+        )
     }
 }
 
