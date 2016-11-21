@@ -9,8 +9,8 @@ namespace LibraryGradProject.Models
     {
         public int Id { get; set; }
         public int bookId { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime EndDate { get; set; }
+        public DateTime startDate { get; set; }
+        public DateTime endDate { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -30,8 +30,8 @@ namespace LibraryGradProject.Models
             // Return true if the fields match:
             return
                 (bookId == p.bookId) &&
-                (StartDate == p.StartDate) &&
-                (EndDate == p.EndDate);
+                (startDate == p.startDate) &&
+                (endDate == p.endDate);
         }
     }
 }

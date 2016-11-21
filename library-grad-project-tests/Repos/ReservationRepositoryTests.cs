@@ -106,14 +106,14 @@ namespace LibraryGradProjectTests.Repos
             Reservation oldReservation = new Reservation()
             {
                 bookId = 1,
-                StartDate = new System.DateTime(2016, 1, 1, 1, 0, 0),
-                EndDate = new System.DateTime(2016, 1, 1, 2, 0, 0),
+                startDate = new System.DateTime(2016, 1, 1, 1, 0, 0),
+                endDate = new System.DateTime(2016, 1, 1, 2, 0, 0),
             };
             Reservation newReservation = new Reservation()
             {
                 bookId = 1,
-                StartDate = new System.DateTime(2016, 1, 1, 3, 0, 0),
-                EndDate = new System.DateTime(2016, 1, 1, 4, 0, 0),
+                startDate = new System.DateTime(2016, 1, 1, 3, 0, 0),
+                endDate = new System.DateTime(2016, 1, 1, 4, 0, 0),
             };
             repo.Add(oldReservation);
 
@@ -134,14 +134,14 @@ namespace LibraryGradProjectTests.Repos
             Reservation Reservation1 = new Reservation()
             {
                 bookId = 1,
-                StartDate = new System.DateTime(2016, 1, 1, 1, 0, 0),
-                EndDate = new System.DateTime(2016, 1, 1, 2, 0, 0),
+                startDate = new System.DateTime(2016, 1, 1, 1, 0, 0),
+                endDate = new System.DateTime(2016, 1, 1, 2, 0, 0),
             };
             Reservation Reservation2 = new Reservation()
             {
                 bookId = 1,
-                StartDate = new System.DateTime(2016, 1, 1, 1, 30, 0),
-                EndDate = new System.DateTime(2016, 1, 1, 2, 30, 0),
+                startDate = new System.DateTime(2016, 1, 1, 1, 30, 0),
+                endDate = new System.DateTime(2016, 1, 1, 2, 30, 0),
             };
 
             repo.Add(Reservation1);
@@ -159,14 +159,14 @@ namespace LibraryGradProjectTests.Repos
             Reservation Reservation1 = new Reservation()
             {
                 bookId = 1,
-                StartDate = new System.DateTime(2016, 1, 1, 1, 0, 0),
-                EndDate = new System.DateTime(2016, 1, 1, 2, 0, 0),
+                startDate = new System.DateTime(2016, 1, 1, 1, 0, 0),
+                endDate = new System.DateTime(2016, 1, 1, 2, 0, 0),
             };
             Reservation Reservation2 = new Reservation()
             {
                 bookId = 1,
-                StartDate = new System.DateTime(2016, 1, 1, 1, 30, 0),
-                EndDate = new System.DateTime(2016, 1, 1, 2, 30, 0),
+                startDate = new System.DateTime(2016, 1, 1, 1, 30, 0),
+                endDate = new System.DateTime(2016, 1, 1, 2, 30, 0),
             };
             repo.Add(Reservation1);
 

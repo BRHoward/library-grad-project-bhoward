@@ -17,9 +17,9 @@ namespace LibraryGradProjectTests.Repos
             // Arrange
             LibraryContextMock mockContext = new LibraryContextMock();
             FilledBookRepository repo = new FilledBookRepository(mockContext);
-            Book book1 = new Book { Id = 0, Title = "Tennis", ISBN = "11111", Author = "Andy Murray", PublishDate = "01/01/2001" };
-            Book book2 = new Book { Id = 1, Title = "All about tennis", ISBN = "22222", Author = "Tim Henman", PublishDate = "02/02/2002" };
-            Book book3 = new Book { Id = 2, Title = "Yeah tennis", ISBN = "33333", Author = "Boris Becker", PublishDate = "03/03/2003" };
+            Book book1 = new Book { Id = 0, title = "Tennis", isbn = "11111", author = "Andy Murray", publishDate = "01/01/2001" };
+            Book book2 = new Book { Id = 1, title = "All about tennis", isbn = "22222", author = "Tim Henman", publishDate = "02/02/2002" };
+            Book book3 = new Book { Id = 2, title = "Yeah tennis", isbn = "33333", author = "Boris Becker", publishDate = "03/03/2003" };
 
             // Act
             IEnumerable<Book> books = repo.GetAll();
@@ -34,7 +34,7 @@ namespace LibraryGradProjectTests.Repos
             // Arrange
             LibraryContextMock mockContext = new LibraryContextMock();
             FilledBookRepository repo = new FilledBookRepository(mockContext);
-            Book newBook = new Book() { Title = "Test" };
+            Book newBook = new Book() { title = "Test" };
 
             // Act
             repo.Add(newBook);
@@ -50,8 +50,8 @@ namespace LibraryGradProjectTests.Repos
             // Arrange
             LibraryContextMock mockContext = new LibraryContextMock();
             FilledBookRepository repo = new FilledBookRepository(mockContext);
-            Book newBook1 = new Book() { Id = 0, Title = "Test1" };
-            Book newBook2 = new Book() { Id = 1, Title = "Test2" };
+            Book newBook1 = new Book() { Id = 0, title = "Test1" };
+            Book newBook2 = new Book() { Id = 1, title = "Test2" };
             repo.Add(newBook1);
             repo.Add(newBook2);
 
@@ -68,11 +68,11 @@ namespace LibraryGradProjectTests.Repos
             // Arrange
             LibraryContextMock mockContext = new LibraryContextMock();
             FilledBookRepository repo = new FilledBookRepository(mockContext);
-            Book book1 = new Book { Id = 0, Title = "Tennis", ISBN = "11111", Author = "Andy Murray", PublishDate = "01/01/2001" };
-            Book book2 = new Book { Id = 1, Title = "All about tennis", ISBN = "22222", Author = "Tim Henman", PublishDate = "02/02/2002" };
-            Book book3 = new Book { Id = 2, Title = "Yeah tennis", ISBN = "33333", Author = "Boris Becker", PublishDate = "03/03/2003" };
-            Book newBook1 = new Book() { Title = "Test1" };
-            Book newBook2 = new Book() { Title = "Test2" };
+            Book book1 = new Book { Id = 0, title = "Tennis", isbn = "11111", author = "Andy Murray", publishDate = "01/01/2001" };
+            Book book2 = new Book { Id = 1, title = "All about tennis", isbn = "22222", author = "Tim Henman", publishDate = "02/02/2002" };
+            Book book3 = new Book { Id = 2, title = "Yeah tennis", isbn = "33333", author = "Boris Becker", publishDate = "03/03/2003" };
+            Book newBook1 = new Book() { title = "Test1" };
+            Book newBook2 = new Book() { title = "Test2" };
             repo.Add(newBook1);
             repo.Add(newBook2);
 
@@ -89,12 +89,12 @@ namespace LibraryGradProjectTests.Repos
             // Arrange
             LibraryContextMock mockContext = new LibraryContextMock();
             FilledBookRepository repo = new FilledBookRepository(mockContext);
-            Book book1 = new Book { Id = 0, Title = "Tennis", ISBN = "11111", Author = "Andy Murray", PublishDate = "01/01/2001" };
-            Book book2 = new Book { Id = 1, Title = "All about tennis", ISBN = "22222", Author = "Tim Henman", PublishDate = "02/02/2002" };
-            Book book3 = new Book { Id = 2, Title = "Yeah tennis", ISBN = "33333", Author = "Boris Becker", PublishDate = "03/03/2003" };
-            Book newBook1 = new Book() { Id = 3, Title = "Test1" };
-            Book newBook2 = new Book() { Id = 4, Title = "Test2" };
-            Book newBook3 = new Book() { Id = 5, Title = "Test3" };
+            Book book1 = new Book { Id = 0, title = "Tennis", isbn = "11111", author = "Andy Murray", publishDate = "01/01/2001" };
+            Book book2 = new Book { Id = 1, title = "All about tennis", isbn = "22222", author = "Tim Henman", publishDate = "02/02/2002" };
+            Book book3 = new Book { Id = 2, title = "Yeah tennis", isbn = "33333", author = "Boris Becker", publishDate = "03/03/2003" };
+            Book newBook1 = new Book() { Id = 3, title = "Test1" };
+            Book newBook2 = new Book() { Id = 4, title = "Test2" };
+            Book newBook3 = new Book() { Id = 5, title = "Test3" };
             repo.Add(newBook1);
             repo.Add(newBook2);
             repo.Add(newBook3);
@@ -113,24 +113,24 @@ namespace LibraryGradProjectTests.Repos
             // Arrange
             LibraryContextMock mockContext = new LibraryContextMock();
             FilledBookRepository repo = new FilledBookRepository(mockContext);
-            Book book1 = new Book { Id = 0, Title = "Tennis", ISBN = "11111", Author = "Andy Murray", PublishDate = "01/01/2001" };
-            Book book2 = new Book { Id = 1, Title = "All about tennis", ISBN = "22222", Author = "Tim Henman", PublishDate = "02/02/2002" };
-            Book book3 = new Book { Id = 2, Title = "Yeah tennis", ISBN = "33333", Author = "Boris Becker", PublishDate = "03/03/2003" };
+            Book book1 = new Book { Id = 0, title = "Tennis", isbn = "11111", author = "Andy Murray", publishDate = "01/01/2001" };
+            Book book2 = new Book { Id = 1, title = "All about tennis", isbn = "22222", author = "Tim Henman", publishDate = "02/02/2002" };
+            Book book3 = new Book { Id = 2, title = "Yeah tennis", isbn = "33333", author = "Boris Becker", publishDate = "03/03/2003" };
             Book newBook = new Book()
             {
                 Id = 3,
-                Title = "New title",
-                Author = "New Author",
-                ISBN = "22222",
-                PublishDate = "2001"
+                title = "New title",
+                author = "New author",
+                isbn = "22222",
+                publishDate = "2001"
             };
             Book oldBook = new Book()
             {
                 Id = 3,
-                Title = "Old title",
-                Author = "Old Author",
-                ISBN = "11111",
-                PublishDate = "2000"
+                title = "Old title",
+                author = "Old author",
+                isbn = "11111",
+                publishDate = "2000"
             };
             repo.Add(oldBook);
 

@@ -46,7 +46,7 @@ namespace LibraryGradProjectTests.Controllers
             mockRepo.Setup(mock => mock.Add(It.IsAny<Book>()));
             BooksController controller = new BooksController(mockRepo.Object);
 
-            Book newBook = new Book() { Title = "Test" };
+            Book newBook = new Book() { title = "Test" };
 
             // Act
             controller.Post(newBook);
@@ -75,10 +75,10 @@ namespace LibraryGradProjectTests.Controllers
         {
             // Arrange
             Book newBook = new Book() {
-                Title = "New title",
-                Author = "New Author",
-                ISBN = "22222",
-                PublishDate = "2001"
+                title = "New title",
+                author = "New author",
+                isbn = "22222",
+                publishDate = "2001"
             };
             var mockRepo = new Mock<IRepository<Book>>();
             mockRepo.Setup(mock => mock.Update(It.IsAny<Book>(), It.IsAny<int>()));
