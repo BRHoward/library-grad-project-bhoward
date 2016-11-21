@@ -1,13 +1,19 @@
 import {combineReducers} from 'redux';
 import {
 	ADD_BOOK, 
-	DELETE_BOOK, 
+	DELETE_BOOK,
 	UPDATE_BOOK,
 	ADD_RESERVATION, 
-	DELETE_RESERVATION} from '../actions/constants';
+	DELETE_RESERVATION,
+    REQUEST_BOOKS,
+    RECEIVE_BOOKS,
+	REQUEST_RESERVATIONS,
+	RECEIVE_RESERVATIONS} from '../actions/constants';
 
-
-function books(state = [], action) {
+function books(state = {
+	isFetching: false,
+	items : []
+}, action) {
 	switch (action.type) {
 		case ADD_BOOK :
 			return [
@@ -34,13 +40,26 @@ function books(state = [], action) {
 					Id : state[bookToUpdateIdx].Id
 				}),
 				...state.slice(bookToUpdateIdx+1)
-			]
+			] 
+		case REQUEST_BOOKS :
+			return Object.assign({}, state, {
+				isFetching: true
+			})
+		case RECEIVE_BOOKS :
+			return Object.assign({}, state, {
+				isFetching: false,
+				items : action.payload.books,
+				lastUpdated : action.receivedAt
+			})
 		default :
 			return state
 	}
 }
 
-function reservations(state = [], action) {
+function reservations(state = {
+		isFetching : false,
+		items : []
+}, action) {
 	switch (action.type) {
 		case ADD_RESERVATION :
 			return [
@@ -58,6 +77,16 @@ function reservations(state = [], action) {
 				...state.slice(0,reservationToDeleteIdx),
 				...state.slice(reservationToDeleteIdx+1)
 			]
+		case REQUEST_RESERVATIONS :
+			return Object.assign({}, state, {
+				isFetching: true
+			})
+		case RECEIVE_RESERVATIONS :
+			return Object.assign({}, state, {
+				isFetching: false,
+				items : action.payload.reservations,
+				lastUpdated : action.receivedAt
+			})
 		default :
 			return state
 	}
