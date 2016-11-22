@@ -8,7 +8,9 @@ const ReservationListItem = ({reservation, deleteReservation}) => {
 
 	return (
 		<li>
-		{reservation.bookId} - {reservation.startDate} - {reservation.endDate}
+		{reservation.bookId} 
+		- {new Date(reservation.startDate).toDateString()} 
+		- {new Date(reservation.endDate).toDateString()}
 		<button onClick={handleDelete}>Delete</button>
 		</li>
 		);

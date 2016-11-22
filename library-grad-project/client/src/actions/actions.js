@@ -112,7 +112,7 @@ export const addReservation = (reservation) => {
             })
             .then((response) => {
                 dispatch(fetchReservations());
-            });
+            })
         }
     }
 

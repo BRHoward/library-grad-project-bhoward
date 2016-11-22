@@ -4,7 +4,8 @@ import {addBook, deleteBook, updateBook, addReservation, fetchBooks} from '../ac
 
 
 const mapStateToProps = (state) => ({
-	books : state.books
+	books : state.books,
+	reservations : state.reservations
 })
 
 const mapDispatchToProps = (dispatch) => ({

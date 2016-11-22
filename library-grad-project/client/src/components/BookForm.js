@@ -1,4 +1,11 @@
 import React from 'react';
+import Dialog from 'material-ui/Dialog';
+import TextField from 'material-ui/TextField';
+import FlatButton from 'material-ui/FlatButton';
+
+const margin = {
+	margin: 12,
+}
 
 class BookForm extends React.Component {
 	constructor(props) {
@@ -15,6 +22,7 @@ class BookForm extends React.Component {
 		this.handlePublishDateChange = this.handlePublishDateChange.bind(this);
 		this.handleISBNChange = this.handleISBNChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleClose = this.handleClose.bind(this);
 	}
 
 	handleTitleChange(event) {
@@ -41,17 +49,39 @@ class BookForm extends React.Component {
 		})
 	}
 
+	handleClose() {
+		this.props.toggle();
+	}
+
 	render () {
+		const actions = [
+	      <FlatButton
+	        label="Cancel"
+	        primary={true}
+	        onTouchTap={this.handleClose}
+	        style={margin}
+	      />,
+	      <FlatButton
+	        label="Submit"
+	        primary={true}
+	        onTouchTap={this.handleSubmit}
+	        style={margin}
+	      />
+	    ]
 		return (
+			<Dialog
+				title="Enter book details"
+				actions={actions}
+				modal={false}
+				open={this.props.open}
+				onRequestClose={this.handleClose}>
 			<div>
-				<form onSubmit={this.handleSubmit}>
-					Title: <input type="text" value={this.state.title} onChange={this.handleTitleChange}></input><br/>
-					Author: <input type="text" value={this.state.author} onChange={this.handleAuthorChange}></input><br/>
-					Publish Date: <input type="text" value={this.state.publishDate} onChange={this.handlePublishDateChange}></input><br/>
-					ISBN: <input type="text" value={this.state.isbn} onChange={this.handleISBNChange}></input><br/>
-					<input type="submit"></input>
-				</form>
+				<TextField floatingLabelText="Title" value={this.state.title} onChange={this.handleTitleChange}></TextField><br/>
+				<TextField floatingLabelText="Author" value={this.state.author} onChange={this.handleAuthorChange}></TextField><br/>
+				<TextField floatingLabelText="Publish Date" value={this.state.publishDate} onChange={this.handlePublishDateChange}></TextField><br/>
+				<TextField floatingLabelText="ISBN" value={this.state.isbn} onChange={this.handleISBNChange}></TextField><br/>
 			</div>
+			</Dialog>
 			);
 	}
 }
