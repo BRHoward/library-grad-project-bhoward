@@ -1,8 +1,9 @@
 import {connect} from 'react-redux';
-import ReservationList from '../components/ReservationList';
+import ReservationSelector from '../components/ReservationSelector';
 import {deleteReservation, fetchReservations} from '../actions/actions';
 
 const mapStateToProps = (state) => ({
+	books: state.books,
 	reservations: state.reservations
 })
 
@@ -18,6 +19,6 @@ const mapDispatchToProps = (dispatch) => ({
 const ReservationListContainer = connect(
 	mapStateToProps,
 	mapDispatchToProps
-	)(ReservationList)
+	)(ReservationSelector)
 
 export default ReservationListContainer;

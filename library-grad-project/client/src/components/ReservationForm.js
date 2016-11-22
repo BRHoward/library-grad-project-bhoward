@@ -15,6 +15,7 @@ class ReservationForm extends React.Component {
 			bookId : this.props.bookId,
 			startDate : null,
 			endDate : null,
+			invalidInput : false
 		}
 		this.handleStartDateChange = this.handleStartDateChange.bind(this);
 		this.handleEndDateChange = this.handleEndDateChange.bind(this);
@@ -44,11 +45,17 @@ class ReservationForm extends React.Component {
 
 	handleSubmit(event) {
 		event.preventDefault();
-		this.props.onSubmit(this.state);
-		this.setState({
-			startDate : "",
-			endDate : "",
-		})
+		if(new Date(this.state.endDate) < new Date(this.state.startDate)){
+			this.setState({
+				invalidInput : true
+			})
+		} else {
+			this.props.onSubmit(this.state);
+			this.setState({
+				startDate : "",
+				endDate : "",
+			})
+		}
 	}
 
 	handleClose() {
@@ -83,11 +90,18 @@ class ReservationForm extends React.Component {
 	    		value={this.state.startDate}
 	    		onChange={this.handleStartDateChange}
 	    		shouldDisableDate={this.invalidDate}/>
+
+	    	<p>until</p>
+
 	    	<DatePicker
 	    		hintText="End Date"
 	    		value={this.state.endDate}
 	    		onChange={this.handleEndDateChange}
 	    		shouldDisableDate={this.invalidDate}/>
+
+	    	{this.state.invalidInput && 
+	    		<h4> End date cannot be before start date </h4>
+	    	}
 	    	</Dialog>
 	    	)
 

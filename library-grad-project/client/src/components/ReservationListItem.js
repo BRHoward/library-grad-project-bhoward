@@ -1,4 +1,9 @@
 import React from 'react';
+import FlatButton from 'material-ui/FlatButton';
+
+const margin = {
+	margin: 12,
+}
 
 const ReservationListItem = ({reservation, deleteReservation}) => {
 
@@ -8,10 +13,13 @@ const ReservationListItem = ({reservation, deleteReservation}) => {
 
 	return (
 		<li>
-		{reservation.bookId} 
-		- {new Date(reservation.startDate).toDateString()} 
-		- {new Date(reservation.endDate).toDateString()}
-		<button onClick={handleDelete}>Delete</button>
+		{new Date(reservation.startDate).toDateString() + " - "} 
+		{new Date(reservation.endDate).toDateString()}
+		<FlatButton 
+			label="Delete" 
+			secondary={true} 
+			onClick={handleDelete}
+			style={margin}/>
 		</li>
 		);
 }

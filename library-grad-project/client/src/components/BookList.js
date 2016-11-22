@@ -41,6 +41,7 @@ class BookList extends React.Component {
 	render () {
 		return (
 		<div>
+			<h1 style={margin}> LibraryApp </h1>
 			<Table>
 				<TableHeader displaySelectAll={false} adjustForCheckbox={false}>
 					<TableRow>
