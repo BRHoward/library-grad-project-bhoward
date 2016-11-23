@@ -24,8 +24,6 @@ export const fetchBooks = () => {
                 return response.json();
             })
             .then((data) => {
-                console.log("got the booooks");
-                console.log(data);
                 dispatch(receiveBooks(data));
             });
         }
@@ -94,8 +92,6 @@ export const fetchReservations = () => {
                 return response.json();
             })
             .then((data) => {
-                console.log("got the reservations");
-                console.log(data);
                 dispatch(receiveReservations(data));
             });
         }
@@ -111,8 +107,17 @@ export const addReservation = (reservation) => {
                 body: JSON.stringify(reservation)
             })
             .then((response) => {
-                dispatch(fetchReservations());
-            });
+                if(response.ok) {
+                    dispatch(fetchReservations());
+                } else {
+                    response.json().then((json) => {
+                        console.log(json.Message);
+                    });
+                }
+            })
+            .catch((error) => {
+                console.log(error);
+            })
         }
     }
 
