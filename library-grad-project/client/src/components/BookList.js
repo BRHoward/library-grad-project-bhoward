@@ -16,7 +16,7 @@ class BookList extends React.Component {
 		this.state = {
 			addingBook: false
 		}
-
+		
 		this.toggleAdding = this.toggleAdding.bind(this);
 		this.addBook = this.addBook.bind(this);
 	}

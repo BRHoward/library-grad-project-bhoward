@@ -60,7 +60,7 @@ class BookListItem extends React.Component{
 			<TableRowColumn>{this.props.book.publishDate}</TableRowColumn>
 			<TableRowColumn>{this.props.book.isbn}</TableRowColumn>
 			<TableRowColumn>
-				<FlatButton label="Delete" secondary={true} onTouchTap={this.deleteBook} style={margin}/>
+				<FlatButton className="del-btn" label="Delete" secondary={true} onTouchTap={this.deleteBook} style={margin}/>
 				<FlatButton label="Update" onTouchTap={this.toggleUpdating} style={margin}/>
 				<FlatButton label="Reserve" primary={true} onTouchTap={this.toggleReserving} style={margin}/>
 			</TableRowColumn>
