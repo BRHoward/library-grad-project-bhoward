@@ -87,7 +87,7 @@ describe("Async book actions", () => {
 			});
 		});
 
-	it('creates a fetchBooks action when add a book has been done', () => {
+	it('creates a RECEIVE_BOOKS action when adding a book', () => {
 		fetchMock.post('/api/books', {});
 
 		const expectedActions = [
@@ -102,7 +102,7 @@ describe("Async book actions", () => {
 			})
 		});
 
-	it('creates a fetchBooks action when delete a book has been done', () => {
+	it('creates a RECEIVE_BOOKS action when deleting a book', () => {
 		fetchMock.delete('/api/books/0', {});
 
 		const expectedActions = [
@@ -117,7 +117,7 @@ describe("Async book actions", () => {
 			})
 		});
 
-	it('creates a fetchBooks action when update a book has been done', () => {
+	it('creates a RECEIVE_BOOKS action when updating a book', () => {
 		fetchMock.put('/api/books/0', {});
 
 		const expectedActions = [
