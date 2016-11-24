@@ -87,7 +87,7 @@ class ReservationForm extends React.Component {
 	    		onRequestClose={this.handleClose}>
 	    	<DatePicker
 	    		hintText="Start Date"
-	    		value={this.state.startDate}
+	    		value = {this.state.startDate !== ''? new Date(this.state.startDate) : null}
 	    		onChange={this.handleStartDateChange}
 	    		shouldDisableDate={this.invalidDate}/>
 
@@ -95,7 +95,7 @@ class ReservationForm extends React.Component {
 
 	    	<DatePicker
 	    		hintText="End Date"
-	    		value={this.state.endDate}
+	    		value = {this.state.endDate !== ''? new Date(this.state.endDate) : null}
 	    		onChange={this.handleEndDateChange}
 	    		shouldDisableDate={this.invalidDate}/>
 
