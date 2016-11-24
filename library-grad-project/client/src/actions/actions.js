@@ -25,6 +25,9 @@ export const fetchBooks = () => {
             })
             .then((data) => {
                 dispatch(receiveBooks(data));
+            })
+            .catch((er) => {
+                console.log(er);
             });
         }
     }
