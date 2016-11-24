@@ -5,7 +5,7 @@ import {
 	REQUEST_RESERVATIONS,
 	RECEIVE_RESERVATIONS} from '../actions/constants';
 
-function books(state = {
+export function books(state = {
 	isFetching: false,
 	items : []
 }, action) {
@@ -25,7 +25,7 @@ function books(state = {
 	}
 }
 
-function reservations(state = {
+export function reservations(state = {
 		isFetching : false,
 		items : []
 }, action) {
@@ -48,6 +48,6 @@ function reservations(state = {
 const libraryApp = combineReducers({
 	books: books,
 	reservations : reservations,
-})
+});
 
 export default libraryApp;
