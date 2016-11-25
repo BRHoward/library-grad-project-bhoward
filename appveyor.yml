@@ -2,16 +2,14 @@
 environment:
   nodejs_version: "6.3.1"
 
-# init:
-#   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-
 # Install scripts. (runs after repo cloning)
 install:
 
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
-  # install modules
+  # Go to node project directory
   - cd library-grad-project\client
+  # install modules
   - npm install
 
 # Post-install test scripts.
@@ -20,11 +18,7 @@ test_script:
   - node --version
   - npm --version
   # run tests
-  - set CI
   - npm test
 
 # Don't actually build.
 build: off
-
-# on_finish:
-#   - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
