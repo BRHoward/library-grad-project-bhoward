@@ -17,7 +17,8 @@ test_script:
   - node --version
   - npm --version
   # run tests
-  - set CI=true&&npm test
+  - set CI
+  - npm test
 
 # Don't actually build.
 build: off
