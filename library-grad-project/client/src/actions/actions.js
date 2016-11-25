@@ -89,7 +89,7 @@ export const receiveReservations = (json) => ({
 
 export const fetchReservations = () => {
     return function (dispatch) {
-        dispatch(requestBooks())
+        dispatch(requestReservations())
         return fetch('/api/reservations')
             .then((response) => {
                 return response.json();

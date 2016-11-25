@@ -87,7 +87,7 @@ describe("Async book actions", () => {
 			});
 		});
 
-	it('creates a RECEIVE_BOOKS action when adding a book', () => {
+	it('creates a REQUEST_BOOKS action when adding a book', () => {
 		fetchMock.post('/api/books', {});
 
 		const expectedActions = [
@@ -102,7 +102,7 @@ describe("Async book actions", () => {
 			})
 		});
 
-	it('creates a RECEIVE_BOOKS action when deleting a book', () => {
+	it('creates a REQUEST_BOOKS action when deleting a book', () => {
 		fetchMock.delete('/api/books/0', {});
 
 		const expectedActions = [
@@ -117,7 +117,7 @@ describe("Async book actions", () => {
 			})
 		});
 
-	it('creates a RECEIVE_BOOKS action when updating a book', () => {
+	it('creates a REQUEST_BOOKS action when updating a book', () => {
 		fetchMock.put('/api/books/0', {});
 
 		const expectedActions = [
@@ -156,4 +156,59 @@ describe("Synchronous reservation actions", () => {
 		expect(actions.receiveReservations([testReservation1,testReservation2]).type).toEqual(expectedAction.type);
 		expect(actions.receiveReservations([testReservation1,testReservation2]).payload).toEqual(expectedAction.payload);
 	});
+});
+
+describe("Async reservation actions", () => {
+
+	it('creates a RECEIVE_RESERVATIONS action when fetching reservations has been done', () => {
+		fetchMock.get('/api/reservations', [testReservation1, testReservation2]);
+
+		const expectedActions = [
+			{type : types.REQUEST_RESERVATIONS},
+   			{
+   				type : types.RECEIVE_RESERVATIONS, 
+   				payload: {reservations:[testReservation1, testReservation2]},
+   				receivedAt: Date.now()
+  			}
+		]
+
+		const store = mockStore({});
+
+		return store.dispatch(actions.fetchReservations())
+			.then(() => {
+				expect(store.getActions()[0]).toEqual(expectedActions[0]);
+				expect(store.getActions()[1].type).toEqual(expectedActions[1].type);
+				expect(store.getActions()[1].payload).toEqual(expectedActions[1].payload);
+			});
+		});
+
+	it('creates a REQUEST_RESERVATIONS action when adding a reservation', () => {
+		fetchMock.post('/api/reservations', {});
+
+		const expectedActions = [
+			{type : types.REQUEST_RESERVATIONS},
+		]
+
+		const store = mockStore({});
+
+		return store.dispatch(actions.addReservation(testReservation1))
+			.then(() => {
+				expect(store.getActions()).toEqual(expectedActions);
+			})
+		});
+
+	it('creates a REQUEST_RESERVATIONS action when deleting a reservation', () => {
+		fetchMock.delete('/api/reservations/0', {});
+
+		const expectedActions = [
+			{type : types.REQUEST_RESERVATIONS},
+		]
+
+		const store = mockStore({});
+
+		return store.dispatch(actions.deleteReservation(0))
+			.then(() => {
+				expect(store.getActions()).toEqual(expectedActions);
+			})
+		});
 });
