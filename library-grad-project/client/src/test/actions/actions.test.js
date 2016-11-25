@@ -66,6 +66,7 @@ describe("Synchronous book actions", () => {
 describe("Async book actions", () => {
 
 	afterEach(() => {
+		fetchMock.reset();
 		fetchMock.restore();
 	});
 
@@ -74,7 +75,7 @@ describe("Async book actions", () => {
 	});
 
 	it('creates a RECEIVE_BOOKS action when fetching books has been done', () => {
-		
+
 		const expectedActions = [
 			{type : types.REQUEST_BOOKS},
    			{
@@ -95,7 +96,7 @@ describe("Async book actions", () => {
 		});
 
 	it('creates a REQUEST_BOOKS action when adding a book', () => {
-		fetchMock.post('/api/books', {});
+		fetchMock.post('/api/books', 200);
 
 		const expectedActions = [
 			{type : types.REQUEST_BOOKS},
@@ -110,7 +111,7 @@ describe("Async book actions", () => {
 		});
 
 	it('creates a REQUEST_BOOKS action when deleting a book', () => {
-		fetchMock.delete('/api/books/0', {});
+		fetchMock.delete('/api/books/0', 200);
 
 		const expectedActions = [
 			{type : types.REQUEST_BOOKS},
@@ -125,7 +126,7 @@ describe("Async book actions", () => {
 		});
 
 	it('creates a REQUEST_BOOKS action when updating a book', () => {
-		fetchMock.put('/api/books/0', {});
+		fetchMock.put('/api/books/0', 200);
 
 		const expectedActions = [
 			{type : types.REQUEST_BOOKS},
