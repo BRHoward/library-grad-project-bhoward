@@ -65,9 +65,16 @@ describe("Synchronous book actions", () => {
 
 describe("Async book actions", () => {
 
-	it('creates a RECEIVE_BOOKS action when fetching books has been done', () => {
-		fetchMock.get('/api/books', [testBook1, testBook2]);
+	afterEach(() => {
+		fetchMock.restore();
+	});
 
+	beforeEach(() => {
+		fetchMock.get('/api/books', [testBook1, testBook2]);
+	});
+
+	it('creates a RECEIVE_BOOKS action when fetching books has been done', () => {
+		
 		const expectedActions = [
 			{type : types.REQUEST_BOOKS},
    			{
@@ -160,9 +167,15 @@ describe("Synchronous reservation actions", () => {
 
 describe("Async reservation actions", () => {
 
-	it('creates a RECEIVE_RESERVATIONS action when fetching reservations has been done', () => {
-		fetchMock.get('/api/reservations', [testReservation1, testReservation2]);
+	afterEach(() => {
+		fetchMock.restore();
+	});
 
+	beforeEach(() => {
+		fetchMock.get('/api/reservations', [testReservation1, testReservation2]);
+	});
+
+	it('creates a RECEIVE_RESERVATIONS action when fetching reservations has been done', () => {
 		const expectedActions = [
 			{type : types.REQUEST_RESERVATIONS},
    			{
@@ -196,6 +209,20 @@ describe("Async reservation actions", () => {
 				expect(store.getActions()).toEqual(expectedActions);
 			})
 		});
+
+	it('creates no actions when adding invalid reservation', () => {
+		fetchMock.post('/api/reservations', 400);
+
+		const expectedActions = [];
+
+		const store = mockStore({});
+
+		return store.dispatch(actions.addReservation(testReservation1))
+			.then(() => {
+				expect(store.getActions()).toEqual(expectedActions);
+			})
+		});
+
 
 	it('creates a REQUEST_RESERVATIONS action when deleting a reservation', () => {
 		fetchMock.delete('/api/reservations/0', {});
