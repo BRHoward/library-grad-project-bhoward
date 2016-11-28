@@ -2,6 +2,13 @@
 environment:
   nodejs_version: "6.3.1"
 
+before_build:
+  - nuget restore
+
+cache :
+  - packages -> **\packages.config
+  - library-grad-project\client\node_modules -> library-grad-project\client\package.json
+
 # Install scripts. (runs after repo cloning)
 install:
 
@@ -11,6 +18,7 @@ install:
   - cd library-grad-project\client
   # install modules
   - npm install
+  - cd ..\..\
 
 # Post-install test scripts.
 test_script:
@@ -18,7 +26,10 @@ test_script:
   - node --version
   - npm --version
   # run tests
+  - cd library-grad-project-tests\bin\Debug
+  - '%xunit20%\xunit.console.x86 library-grad-project-tests.dll -appveyor'
+  - cd ..\..\..\library-grad-project\client
   - npm test
 
-# Don't actually build.
-build: off
+build:
+ verbosity : minimal
