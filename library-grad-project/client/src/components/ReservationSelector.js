@@ -46,7 +46,7 @@ class ReservationSelector extends React.Component {
 				style={margin}>
 
 				{this.props.books.items.map(book => {
-					return <MenuItem key={book.Id} value={book.Id} primaryText={book.title}/>
+					return <MenuItem key={book.id} value={book.id} primaryText={book.title}/>
 				})}
 			</SelectField>
 			{this.state.selectedBook && 

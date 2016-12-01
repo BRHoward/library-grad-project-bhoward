@@ -8,7 +8,7 @@ const margin = {
 const ReservationListItem = ({reservation, deleteReservation}) => {
 
 	const handleDelete = () => {
-		deleteReservation(reservation.Id)
+		deleteReservation(reservation.id)
 	}
 
 	return (

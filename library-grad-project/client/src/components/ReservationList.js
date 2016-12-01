@@ -8,7 +8,7 @@ class ReservationList extends React.Component {
 				<ul>
 				{this.props.reservations.map(reservation => {
 					return <ReservationListItem 
-						key={reservation.Id} 
+						key={reservation.id} 
 						reservation={reservation}
 						deleteReservation={this.props.deleteReservation}/>
 				})}

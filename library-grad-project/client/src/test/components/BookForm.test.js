@@ -16,7 +16,7 @@ describe('<BookForm />', () => {
 	injectTapEventPlugin();
 
 	const testBook = {
-		Id : 0,
+		id : 0,
 		title : "Test Book",
 		author : "Test Author",
 		publishDate : "Test Date",

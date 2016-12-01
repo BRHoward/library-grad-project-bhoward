@@ -16,7 +16,7 @@ describe('<BookList/>', () => {
 	injectTapEventPlugin();
 
 	const testBook = {
-		Id : 0,
+		id : 0,
 		title : "Test Book",
 		author : "Test Author",
 		publishDate : "Test Date",
@@ -24,7 +24,7 @@ describe('<BookList/>', () => {
 	}
 
 	const testBook2 = {
-		Id : 1,
+		id : 1,
 		title : "Test Book 2",
 		author : "Test Author 2",
 		publishDate : "Test Date 2",
