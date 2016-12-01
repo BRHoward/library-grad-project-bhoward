@@ -29,14 +29,14 @@ namespace LibraryGradProject.Repos
 
         public IEnumerable<Book> GetAll()
         {
-            return _dbContext.Books.OrderBy(b => b.Id).ToList();
+            return _dbContext.Books.OrderBy(b => b.id).ToList();
         }
 
         public Book Get(int id)
         {
             return _dbContext.Books
-                .OrderBy(b => b.Id)
-                .Where(b => b.Id == id)
+                .OrderBy(b => b.id)
+                .Where(b => b.id == id)
                 .SingleOrDefault();
         }
 

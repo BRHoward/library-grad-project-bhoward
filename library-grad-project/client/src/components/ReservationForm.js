@@ -13,8 +13,8 @@ class ReservationForm extends React.Component {
 		super(props);
 		this.state = {
 			bookId : this.props.bookId,
-			startDate : null,
-			endDate : null,
+			startDate : "",
+			endDate : "",
 			invalidInput : false
 		}
 		this.handleStartDateChange = this.handleStartDateChange.bind(this);

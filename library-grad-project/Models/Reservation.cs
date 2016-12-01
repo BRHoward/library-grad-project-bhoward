@@ -7,7 +7,7 @@ namespace LibraryGradProject.Models
 {
     public class Reservation
     {
-        public int Id { get; set; }
+        public int id { get; set; }
         public int bookId { get; set; }
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }

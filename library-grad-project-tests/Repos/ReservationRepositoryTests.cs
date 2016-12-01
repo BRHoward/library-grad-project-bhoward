@@ -46,8 +46,8 @@ namespace LibraryGradProjectTests.Repos
             // Arrange
             LibraryContextMock mockContext = new LibraryContextMock();
             ReservationRepository repo = new ReservationRepository(mockContext);
-            Reservation newReservation1 = new Reservation() { Id = 0, bookId = 1 };
-            Reservation newReservation2 = new Reservation() { Id = 1, bookId = 2 };
+            Reservation newReservation1 = new Reservation() { id = 0, bookId = 1 };
+            Reservation newReservation2 = new Reservation() { id = 1, bookId = 2 };
             repo.Add(newReservation1);
             repo.Add(newReservation2);
 
@@ -82,9 +82,9 @@ namespace LibraryGradProjectTests.Repos
             // Arrange
             LibraryContextMock mockContext = new LibraryContextMock();
             ReservationRepository repo = new ReservationRepository(mockContext);
-            Reservation newReservation1 = new Reservation() { Id = 0, bookId = 1 };
-            Reservation newReservation2 = new Reservation() { Id = 1, bookId = 2 };
-            Reservation newReservation3 = new Reservation() { Id = 2, bookId = 3 };
+            Reservation newReservation1 = new Reservation() { id = 0, bookId = 1 };
+            Reservation newReservation2 = new Reservation() { id = 1, bookId = 2 };
+            Reservation newReservation3 = new Reservation() { id = 2, bookId = 3 };
             repo.Add(newReservation1);
             repo.Add(newReservation2);
             repo.Add(newReservation3);

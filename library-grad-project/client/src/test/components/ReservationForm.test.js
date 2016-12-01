@@ -66,8 +66,8 @@ describe('<ReservationForm />', () => {
 	  		open={true}
 	  		bookId={2}/>);
 	  	expect(reservationForm.state().bookId).toBe(2);
-	  	expect(reservationForm.state().startDate).toBe(null);
-	  	expect(reservationForm.state().endDate).toBe(null);
+	  	expect(reservationForm.state().startDate).toBe("");
+	  	expect(reservationForm.state().endDate).toBe("");
 	  	expect(reservationForm.state().invalidInput).toBe(false);
 	});
 
@@ -112,7 +112,7 @@ describe('<ReservationForm />', () => {
 		  			childContextTypes:{muiTheme: React.PropTypes.object}
 		  		}
 	  		);
-	  	expect(reservationForm.state().startDate).toBe(null);
+	  	expect(reservationForm.state().startDate).toBe("");
 	  	reservationForm.instance().handleStartDateChange({
 	  		target: {
 	  			id : "author",
@@ -133,7 +133,7 @@ describe('<ReservationForm />', () => {
 		  			childContextTypes:{muiTheme: React.PropTypes.object}
 		  		}
 	  		);
-	  	expect(reservationForm.state().endDate).toBe(null);
+	  	expect(reservationForm.state().endDate).toBe("");
 	  	reservationForm.instance().handleEndDateChange({
 	  		target: {
 	  			id : "author",

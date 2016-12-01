@@ -32,14 +32,14 @@ namespace LibraryGradProject.Repos
 
         public IEnumerable<Reservation> GetAll()
         {
-            return _dbContext.Reservations.OrderBy(r => r.Id).ToList();
+            return _dbContext.Reservations.OrderBy(r => r.id).ToList();
         }
 
         public Reservation Get(int id)
         {
             return _dbContext.Reservations
-                .OrderBy(b => b.Id)
-                .Where(b => b.Id == id)
+                .OrderBy(b => b.id)
+                .Where(b => b.id == id)
                 .SingleOrDefault();
         }
 
@@ -74,7 +74,7 @@ namespace LibraryGradProject.Repos
         {
             bool valid = true;
 
-            foreach (var res in _dbContext.Reservations.OrderBy(r => r.Id).ToList())
+            foreach (var res in _dbContext.Reservations.OrderBy(r => r.id).ToList())
             {
                 if (res.bookId == newReservation.bookId &&
                     res.startDate < newReservation.endDate &&
