@@ -39,12 +39,12 @@ class BookListItem extends React.Component{
 	}
 
 	deleteBook () {
-		this.props.deleteBook(this.props.book.Id); 
+		this.props.deleteBook(this.props.book.id); 
 	}
 
 	updateBook(newBook) {
 		this.toggleUpdating();
-		this.props.updateBook(this.props.book.Id, newBook)
+		this.props.updateBook(this.props.book.id, newBook)
 	}
 
 	addReservation(reservation) {
@@ -78,7 +78,7 @@ class BookListItem extends React.Component{
 					open={this.state.reserving}
 					toggle={this.toggleReserving}
 					onSubmit={this.addReservation} 
-					bookId={this.props.book.Id}
+					bookId={this.props.book.id}
 					reservations={this.props.reservations}/>
 			}
 		</TableRow>

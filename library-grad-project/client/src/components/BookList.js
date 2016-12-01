@@ -55,7 +55,7 @@ class BookList extends React.Component {
 				<TableBody>
 					{this.props.books.items.map(book => {
 						return <BookListItem 
-							key={book.Id} 
+							key={book.id} 
 							book={book} 
 							deleteBook={this.props.deleteBook}
 							updateBook={this.props.updateBook}

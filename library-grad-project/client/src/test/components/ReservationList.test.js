@@ -8,13 +8,13 @@ describe("<ReservationList/>", () => {
 
 	const testReservations = [
 		{
-			Id : 0,
+			id : 0,
 			bookId : 5,
 			startDate : "01-01-2001",
 			endDate  : "02-01-2001"
 		},
 		{
-			Id : 1,
+			id : 1,
 			bookId : 7,
 			startDate : "01-01-2001",
 			endDate  : "02-01-2001"

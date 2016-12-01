@@ -3,7 +3,7 @@ import * as types from '../../actions/constants';
 
 
 const testBook1 = {
-	Id : 1,
+	id : 1,
 	title : "Test Book",
 	author : "Test Author",
 	publishDate : "Test Date",
@@ -11,7 +11,7 @@ const testBook1 = {
 }
 
 const testBook2 = {
-	Id : 2,
+	id : 2,
 	title : "Test Book 2",
 	author : "Test Author 2",
 	publishDate : "Test Date 2",
@@ -19,13 +19,13 @@ const testBook2 = {
 }
 
 const testReservation1 = {
-	Id : 0,
+	id : 0,
 	bookId : 5,
 	startDate : "01-01-2001",
 	endDate  : "01-02-2001"
 }
 const testReservation2 = {
-	Id : 1,
+	id : 1,
 	bookId : 6,
 	startDate : "01-05-2001",
 	endDate  : "01-06-2001"

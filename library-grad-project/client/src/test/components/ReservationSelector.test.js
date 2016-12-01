@@ -10,7 +10,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 describe('<ReservationSelector />', () => {
 
 	const testBook = {
-		Id : 1,
+		id : 1,
 		title : "Test Book",
 		author : "Test Author",
 		publishDate : "Test Date",
@@ -18,14 +18,14 @@ describe('<ReservationSelector />', () => {
 	}
 
 	const testReservation1 = {
-		Id : 0,
+		id : 0,
 		bookId : 5,
 		startDate : "01-01-2001 00:00:00",
 		endDate : "01-03-2001 00:00:00"
 	}
 
 	const testReservation2 = {
-		Id : 0,
+		id : 0,
 		bookId : 1,
 		startDate : "01-03-2001 00:00:00",
 		endDate : "01-05-2001 00:00:00"
