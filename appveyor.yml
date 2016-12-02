@@ -3,11 +3,13 @@ environment:
   nodejs_version: "6.3.1"
 
 before_build:
+  - cd dotnet
   - nuget restore
+  - cd ..\
 
 cache :
   - packages -> **\packages.config
-  - library-grad-project\client\node_modules -> library-grad-project\client\package.json
+  - client\node_modules -> client\package.json
 
 # Install scripts. (runs after repo cloning)
 install:
@@ -15,10 +17,10 @@ install:
   # Get the latest stable version of Node.js or io.js
   - ps: Install-Product node $env:nodejs_version
   # Go to node project directory
-  - cd library-grad-project\client
+  - cd client
   # install modules
   - npm install
-  - cd ..\..\
+  - cd ..
 
 # Post-install test scripts.
 test_script:
@@ -26,9 +28,9 @@ test_script:
   - node --version
   - npm --version
   # run tests
-  - cd library-grad-project-tests\bin\Debug
+  - cd dotnet\library-grad-project-tests\bin\Debug
   - '%xunit20%\xunit.console.x86 library-grad-project-tests.dll -appveyor'
-  - cd ..\..\..\library-grad-project\client
+  - cd ..\..\..\..\client
   - npm test
 
 build:
