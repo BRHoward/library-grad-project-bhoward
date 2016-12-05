@@ -113,8 +113,8 @@ export const addReservation = (reservation) => {
                 if(response.ok) {
                     dispatch(fetchReservations());
                 } else {
-                    response.json().then((json) => {
-                        console.log(json.Message);
+                    response.text().then((text) => {
+                        console.log(text);
                     });
                 }
             })

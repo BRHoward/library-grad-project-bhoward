@@ -18,4 +18,11 @@ public class ControllerExceptionHandler {
     public String entityNotFoundException(EntityNotFoundException exception) {
         return exception.getMessage();
     }
+
+    @ExceptionHandler(IllegalArgumentException.class)
+    @ResponseBody
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String IllegalArgumentException(IllegalArgumentException exception) {
+        return exception.getMessage();
+    }
 }
