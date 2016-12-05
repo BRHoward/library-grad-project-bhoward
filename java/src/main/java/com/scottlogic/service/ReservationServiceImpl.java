@@ -51,7 +51,7 @@ public class ReservationServiceImpl  implements ReservationService{
             oldReservation.setEndDate(newReservation.getEndDate());
             reservationRepository.save(oldReservation);
         } else {
-            throw new EntityNotFoundException("No book found with id " + id);
+            throw new EntityNotFoundException("No reservation found with id " + id);
         }
     }
 
@@ -59,14 +59,15 @@ public class ReservationServiceImpl  implements ReservationService{
         boolean valid = true;
 
         Iterable<Reservation> currentReservations = reservationRepository.findAll();
-
-        for (Reservation res : currentReservations) {
-            if (res.getBookId() == newReservation.getBookId() &&
-                    res.getStartDate().before(newReservation.getEndDate()) &&
-                    newReservation.getStartDate().before(res.getEndDate()))
-            {
-                valid = false;
-                break;
+        if (currentReservations != null){
+            for (Reservation res : currentReservations) {
+                if (res.getBookId() == newReservation.getBookId() &&
+                        res.getStartDate().before(newReservation.getEndDate()) &&
+                        newReservation.getStartDate().before(res.getEndDate()))
+                {
+                    valid = false;
+                    break;
+                }
             }
         }
 

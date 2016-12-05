@@ -18,6 +18,12 @@ public class Reservation {
         // empty constructor required by hibernate
     }
 
+    public Reservation(final Long bookId, final Date startDate, final Date endDate) {
+        this.bookId = bookId;
+        this.startDate = startDate;
+        this.endDate = endDate;
+    }
+
     @Id
     @GeneratedValue
     public Long getId() {
