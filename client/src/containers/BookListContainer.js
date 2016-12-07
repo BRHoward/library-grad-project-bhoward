@@ -18,8 +18,6 @@ const mapDispatchToProps = (dispatch) => ({
 		dispatch(updateBook(id, book));
 	},
 	addReservation(reservation) {
-		console.log("sending");
-		console.log(reservation);
 		dispatch(addReservation(reservation));
 	},
 	fetchBooks() {
