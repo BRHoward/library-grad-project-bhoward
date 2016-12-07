@@ -2,6 +2,7 @@ package com.scottlogic.web;
 
 
 import com.scottlogic.dao.ReservationRepository;
+import com.scottlogic.domain.Book;
 import com.scottlogic.domain.Reservation;
 import org.hamcrest.Matchers;
 import org.junit.After;

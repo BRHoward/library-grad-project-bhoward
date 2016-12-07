@@ -1,8 +1,9 @@
 package com.scottlogic.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnJava;
+
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
@@ -10,7 +11,7 @@ public class Reservation {
 
     private Long id;
 
-    private Long bookId;
+    private Book book;
     private Date startDate;
     private Date endDate;
 
@@ -18,8 +19,8 @@ public class Reservation {
         // empty constructor required by hibernate
     }
 
-    public Reservation(final Long bookId, final Date startDate, final Date endDate) {
-        this.bookId = bookId;
+    public Reservation(final Book book, final Date startDate, final Date endDate) {
+        this.book = book;
         this.startDate = startDate;
         this.endDate = endDate;
     }
@@ -34,12 +35,14 @@ public class Reservation {
         this.id = id;
     }
 
-    public Long getBookId() {
-        return bookId;
+    @ManyToOne
+    @JsonBackReference
+    public Book getBook() {
+        return book;
     }
 
-    public void setBookId(Long bookId) {
-        this.bookId = bookId;
+    public void setBook(Book book) {
+        this.book = book;
     }
 
     public Date getStartDate() {

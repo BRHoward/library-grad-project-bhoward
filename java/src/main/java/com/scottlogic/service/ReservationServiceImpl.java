@@ -46,7 +46,7 @@ public class ReservationServiceImpl  implements ReservationService{
         Optional<Reservation> currentReservation = reservationRepository.findById(id);
         if(currentReservation.isPresent()){
             Reservation oldReservation = currentReservation.get();
-            oldReservation.setBookId(newReservation.getBookId());
+            oldReservation.setBook(newReservation.getBook());
             oldReservation.setStartDate(newReservation.getStartDate());
             oldReservation.setEndDate(newReservation.getEndDate());
             reservationRepository.save(oldReservation);
@@ -61,7 +61,7 @@ public class ReservationServiceImpl  implements ReservationService{
         Iterable<Reservation> currentReservations = reservationRepository.findAll();
         if (currentReservations != null){
             for (Reservation res : currentReservations) {
-                if (res.getBookId() == newReservation.getBookId() &&
+                if (res.getBook().getId() == newReservation.getBook().getId() &&
                         res.getStartDate().before(newReservation.getEndDate()) &&
                         newReservation.getStartDate().before(res.getEndDate()))
                 {

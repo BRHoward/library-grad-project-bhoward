@@ -1,9 +1,11 @@
 package com.scottlogic.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Entity
 public class Book {
@@ -15,6 +17,8 @@ public class Book {
     private String publishDate;
     private String isbn;
 
+    private List<Reservation> reservations;
+
     public Book() {
         //empty constructor required by hibernate
     }
@@ -24,6 +28,7 @@ public class Book {
         this.author = author;
         this.publishDate = publishDate;
         this.isbn = isbn;
+        this.reservations = new ArrayList<Reservation>();
     }
 
     @Id
@@ -34,6 +39,16 @@ public class Book {
 
     public void setId(final Long id) {
         this.id = id;
+    }
+
+    @OneToMany (mappedBy = "book")
+    @JsonManagedReference
+    public List<Reservation> getReservations() {
+        return reservations;
+    }
+
+    public void setReservations(List<Reservation> reservations) {
+        this.reservations = reservations;
     }
 
     public String getTitle() {
