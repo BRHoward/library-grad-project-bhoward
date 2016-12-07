@@ -4,6 +4,7 @@ package com.scottlogic.dao;
 import com.scottlogic.domain.Book;
 import com.scottlogic.domain.Reservation;
 import org.hamcrest.Matchers;
+import org.hibernate.TransientPropertyValueException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.boot.test.autoconfigure.web.client.AutoConfigureWebClient;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.persistence.EntityNotFoundException;
@@ -63,7 +65,10 @@ public class ReservationRepositoryIT {
     private TestEntityManager entityManager;
 
     @After
-    public void tearDown() {entityManager.clear();}
+    public void tearDown() {
+        entityManager.clear();
+        reservationRepository.deleteAll();
+    }
 
     @Test
     public void shouldGetById() {
@@ -100,6 +105,7 @@ public class ReservationRepositoryIT {
 
     @Test
     public void shouldAddReservation() {
+        entityManager.persist(testBook1);
         reservationRepository.save(testReservation1);
 
         final Reservation result = entityManager.find(Reservation.class, testReservation1.getId());
@@ -108,6 +114,8 @@ public class ReservationRepositoryIT {
 
     @Test
     public void shouldDeleteReservation() {
+        entityManager.persist(testBook1);
+        entityManager.persist(testBook2);
         entityManager.persist(testReservation1);
         entityManager.persist(testReservation2);
 
@@ -118,5 +126,6 @@ public class ReservationRepositoryIT {
         assertThat(result1, equalTo(null));
         assertThat(result2, equalTo(testReservation2));
     }
+
 
 }

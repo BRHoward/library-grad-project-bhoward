@@ -19,6 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Date;
 import java.util.Optional;
 
@@ -73,6 +74,7 @@ public class ReservationControllerIT {
     @After
     public void tearDown() {
         reservationRepository.deleteAll();
+        bookRepository.deleteAll();
     }
 
     @Test
@@ -136,5 +138,4 @@ public class ReservationControllerIT {
         assertThat(repoReservation.get().getEndDate().getTime(), equalTo(testReservation2.getEndDate().getTime()));
 
     }
-
 }
