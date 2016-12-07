@@ -1,8 +1,6 @@
 import {
     REQUEST_BOOKS,
-    RECEIVE_BOOKS,
-    REQUEST_RESERVATIONS,
-    RECEIVE_RESERVATIONS} from './constants';
+    RECEIVE_BOOKS} from './constants';
 
 export const requestBooks = () => ({
     type: REQUEST_BOOKS 
@@ -73,33 +71,6 @@ export const updateBook = (id, book) => {
         }
     }
 
-
-export const requestReservations = () => ({
-    type: REQUEST_RESERVATIONS
-})
-
-export const receiveReservations = (json) => ({
-    type: RECEIVE_RESERVATIONS,
-    payload : {
-        reservations : json.map(child => JSON.parse(JSON.stringify(child)))
-    },
-    receivedAt: Date.now()
-})
-
-
-export const fetchReservations = () => {
-    return function (dispatch) {
-        dispatch(requestReservations())
-        return fetch('/api/reservations')
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                dispatch(receiveReservations(data));
-            });
-        }
-    }
-
 export const addReservation = (reservation) => {
     return function(dispatch) {
         return fetch('/api/reservations', {
@@ -111,7 +82,7 @@ export const addReservation = (reservation) => {
             })
             .then((response) => {
                 if(response.ok) {
-                    dispatch(fetchReservations());
+                    dispatch(fetchBooks());
                 } else {
                     response.text().then((text) => {
                         console.log(text);
@@ -130,7 +101,7 @@ export const deleteReservation = (id) => {
                 method: "DELETE"
             })
             .then((response) => {
-                dispatch(fetchReservations());
+                dispatch(fetchBooks());
             });
         }
     }

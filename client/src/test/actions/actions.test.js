@@ -141,66 +141,22 @@ describe("Async book actions", () => {
 		});
 });
 
-describe("Synchronous reservation actions", () => {
-
-	it('should create an actions to request reservation', () => {
-		const expectedAction = {
-			type : types.REQUEST_RESERVATIONS
-		}
-		expect(actions.requestReservations()).toEqual(expectedAction);
-	});
-
-	it('should create an action to recieve reservations', () => {
-		const expectedAction = {
-			type : types.RECEIVE_RESERVATIONS,
-			payload : {
-				reservations : [
-					testReservation1,
-					testReservation2
-				]
-			},
-			receivedAt : Date.now()
-		}
-		expect(actions.receiveReservations([testReservation1,testReservation2]).type).toEqual(expectedAction.type);
-		expect(actions.receiveReservations([testReservation1,testReservation2]).payload).toEqual(expectedAction.payload);
-	});
-});
-
 describe("Async reservation actions", () => {
 
 	afterEach(() => {
+		fetchMock.reset();
 		fetchMock.restore();
 	});
 
 	beforeEach(() => {
-		fetchMock.get('/api/reservations', [testReservation1, testReservation2]);
+		fetchMock.get('/api/books', [testBook1, testBook2]);
 	});
-
-	it('creates a RECEIVE_RESERVATIONS action when fetching reservations has been done', () => {
-		const expectedActions = [
-			{type : types.REQUEST_RESERVATIONS},
-   			{
-   				type : types.RECEIVE_RESERVATIONS, 
-   				payload: {reservations:[testReservation1, testReservation2]},
-   				receivedAt: Date.now()
-  			}
-		]
-
-		const store = mockStore({});
-
-		return store.dispatch(actions.fetchReservations())
-			.then(() => {
-				expect(store.getActions()[0]).toEqual(expectedActions[0]);
-				expect(store.getActions()[1].type).toEqual(expectedActions[1].type);
-				expect(store.getActions()[1].payload).toEqual(expectedActions[1].payload);
-			});
-		});
-
+	
 	it('creates a REQUEST_RESERVATIONS action when adding a reservation', () => {
 		fetchMock.post('/api/reservations', {});
 
 		const expectedActions = [
-			{type : types.REQUEST_RESERVATIONS},
+			{type : types.REQUEST_BOOKS},
 		]
 
 		const store = mockStore({});
@@ -229,7 +185,7 @@ describe("Async reservation actions", () => {
 		fetchMock.delete('/api/reservations/0', {});
 
 		const expectedActions = [
-			{type : types.REQUEST_RESERVATIONS},
+			{type : types.REQUEST_BOOKS},
 		]
 
 		const store = mockStore({});

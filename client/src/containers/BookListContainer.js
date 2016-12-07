@@ -4,8 +4,7 @@ import {addBook, deleteBook, updateBook, addReservation, fetchBooks} from '../ac
 
 
 const mapStateToProps = (state) => ({
-	books : state.books,
-	reservations : state.reservations
+	books : state.books
 })
 
 const mapDispatchToProps = (dispatch) => ({
@@ -19,6 +18,8 @@ const mapDispatchToProps = (dispatch) => ({
 		dispatch(updateBook(id, book));
 	},
 	addReservation(reservation) {
+		console.log("sending");
+		console.log(reservation);
 		dispatch(addReservation(reservation));
 	},
 	fetchBooks() {

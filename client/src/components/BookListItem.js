@@ -78,8 +78,7 @@ class BookListItem extends React.Component{
 					open={this.state.reserving}
 					toggle={this.toggleReserving}
 					onSubmit={this.addReservation} 
-					bookId={this.props.book.id}
-					reservations={this.props.reservations}/>
+					book={this.props.book}/>
 			}
 		</TableRow>
 		);

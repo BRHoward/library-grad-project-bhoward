@@ -59,8 +59,7 @@ class BookList extends React.Component {
 							book={book} 
 							deleteBook={this.props.deleteBook}
 							updateBook={this.props.updateBook}
-							addReservation={this.props.addReservation}
-							reservations={this.props.reservations}/>
+							addReservation={this.props.addReservation}/>
 					})}
 				</TableBody>
 			</Table>
