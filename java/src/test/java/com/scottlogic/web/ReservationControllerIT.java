@@ -1,11 +1,13 @@
 package com.scottlogic.web;
 
 
+import com.scottlogic.dao.BookRepository;
 import com.scottlogic.dao.ReservationRepository;
 import com.scottlogic.domain.Book;
 import com.scottlogic.domain.Reservation;
 import org.hamcrest.Matchers;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,23 +36,49 @@ public class ReservationControllerIT {
     @Autowired
     private ReservationRepository reservationRepository;
 
+    @Autowired
+    private BookRepository bookRepository;
+
+    private Book testBook1;
+    private Book testBook2;
+    private Reservation testReservation1;
+    private Reservation testReservation2;
+
+    @Before
+    public void initialiseTestData() {
+        testBook1 = new Book(
+                "Test Book",
+                "Test Author",
+                "Test Publish Date",
+                "Test ISBN"
+        );
+        testBook2 = new Book(
+                "Test Book 2",
+                "Test Author 2",
+                "Test Publish Date 2",
+                "Test ISBN 2"
+        );
+        testReservation1 = new Reservation(
+                testBook1,
+                new Date(5000),
+                new Date(6000)
+        );
+        testReservation2 = new Reservation(
+                testBook2,
+                new Date(5000),
+                new Date(6000)
+        );
+    }
+
     @After
     public void tearDown() {
         reservationRepository.deleteAll();
     }
 
     @Test
-    public void shouldGetBookFromId() {
-        Reservation testReservation1 = new Reservation(
-                2L,
-                new Date(5000),
-                new Date(6000)
-        );
-        Reservation testReservation2 = new Reservation(
-                4L,
-                new Date(5500),
-                new Date(6500)
-        );
+    public void shouldGetReservationFromId() {
+        bookRepository.save(testBook1);
+        bookRepository.save(testBook2);
         reservationRepository.save(testReservation1);
         reservationRepository.save(testReservation2);
 
@@ -61,17 +89,9 @@ public class ReservationControllerIT {
     }
 
     @Test
-    public void shouldGetAllBooks() {
-        Reservation testReservation1 = new Reservation(
-                2L,
-                new Date(5000),
-                new Date(6000)
-        );
-        Reservation testReservation2 = new Reservation(
-                4L,
-                new Date(5500),
-                new Date(6500)
-        );
+    public void shouldGetAllReservations() {
+        bookRepository.save(testBook1);
+        bookRepository.save(testBook2);
         reservationRepository.save(testReservation1);
         reservationRepository.save(testReservation2);
 
@@ -83,59 +103,37 @@ public class ReservationControllerIT {
 
     @Test
     public void shouldAddReservation() {
-        Reservation testReservation1 = new Reservation(
-                2L,
-                new Date(5000),
-                new Date(6000)
-        );
-
+        bookRepository.save(testBook1);
         final ResponseEntity<Void> response = restTemplate.postForEntity("/api/reservations", testReservation1, Void.class);
 
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
-        final Iterable<Reservation> repoBooksWithId = reservationRepository.findByBookId(2L);
-        final Reservation repoBook = repoBooksWithId.iterator().next();
+        final Reservation repoReservation = reservationRepository.findAll().iterator().next();
 
-        assertThat(repoBook.getBookId(), equalTo(testReservation1.getBookId()));
-        assertThat(repoBook.getStartDate().getTime(), equalTo(testReservation1.getStartDate().getTime()));
-        assertThat(repoBook.getEndDate().getTime(), equalTo(testReservation1.getEndDate().getTime()));
+        assertThat(repoReservation.getStartDate().getTime(), equalTo(testReservation1.getStartDate().getTime()));
+        assertThat(repoReservation.getEndDate().getTime(), equalTo(testReservation1.getEndDate().getTime()));
     }
 
     @Test
     public void shouldDeleteReservation() {
-        Reservation testReservation1 = new Reservation(
-                2L,
-                new Date(5000),
-                new Date(6000)
-        );
-
+        bookRepository.save(testBook1);
         reservationRepository.save(testReservation1);
 
         restTemplate.delete("/api/reservations/{id}", testReservation1.getId());
 
-        assertThat(reservationRepository.findByBookId(2L).iterator().hasNext(), equalTo(false));
+        assertThat(reservationRepository.findByBook(testBook1).iterator().hasNext(), equalTo(false));
     }
 
     @Test
-    public void shouldUpdateBook() {
-        Reservation oldReservation = new Reservation(
-                2L,
-                new Date(5000),
-                new Date(6000)
-        );
-        Reservation newReservation = new Reservation(
-                4L,
-                new Date(7000),
-                new Date(8000)
-        );
+    public void shouldUpdateReservation() {
+        bookRepository.save(testBook1);
+        reservationRepository.save(testReservation1);
 
-        reservationRepository.save(oldReservation);
+        restTemplate.put("/api/reservations/{id}", testReservation2, testReservation1.getId());
 
-        restTemplate.put("/api/reservations/{id}", newReservation, oldReservation.getId());
+        final Optional<Reservation> repoReservation = reservationRepository.findById(testReservation1.getId());
 
-        final Optional<Reservation> repoBook = reservationRepository.findById(oldReservation.getId());
-        assertThat(repoBook.get().getBookId(), equalTo(newReservation.getBookId()));
-        assertThat(repoBook.get().getStartDate().getTime(), equalTo(newReservation.getStartDate().getTime()));
-        assertThat(repoBook.get().getEndDate().getTime(), equalTo(newReservation.getEndDate().getTime()));
+        assertThat(repoReservation.get().getStartDate().getTime(), equalTo(testReservation2.getStartDate().getTime()));
+        assertThat(repoReservation.get().getEndDate().getTime(), equalTo(testReservation2.getEndDate().getTime()));
 
     }
 

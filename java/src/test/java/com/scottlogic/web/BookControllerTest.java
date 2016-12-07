@@ -3,6 +3,7 @@ package com.scottlogic.web;
 
 import com.scottlogic.domain.Book;
 import com.scottlogic.service.BookService;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,15 +36,29 @@ public class BookControllerTest {
     @MockBean
     private BookService bookService;
 
-    @Test
-    public void shouldGetBookById() throws Exception {
-        Book testBook = new Book(
+    private Book testBook1;
+    private Book testBook2;
+
+    @Before
+    public void initialiseTestData() {
+        testBook1 = new Book(
                 "Test Book",
                 "Test Author",
                 "Test Publish Date",
                 "Test ISBN"
         );
-        when(bookService.getById(0L)).thenReturn(Optional.of(testBook));
+        testBook2 = new Book(
+                "Test Book 2",
+                "Test Author 2",
+                "Test Publish Date 2",
+                "Test ISBN 2"
+        );
+    }
+
+
+    @Test
+    public void shouldGetBookById() throws Exception {
+        when(bookService.getById(0L)).thenReturn(Optional.of(testBook1));
 
         mockMvc.perform(get("/api/books/{id}", 0L))
                 .andExpect(content().contentType(MediaType.ALL.APPLICATION_JSON_UTF8))
@@ -56,18 +71,6 @@ public class BookControllerTest {
 
     @Test
     public void shouldGetAllBooks() throws Exception {
-        Book testBook1 = new Book(
-                "Test Book",
-                "Test Author",
-                "Test Publish Date",
-                "Test ISBN"
-        );
-        Book testBook2 = new Book(
-                "Test Book 2",
-                "Test Author 2",
-                "Test Publish Date 2",
-                "Test ISBN 2"
-        );
         when(bookService.getAll()).thenReturn(Arrays.asList(testBook1, testBook2));
 
         mockMvc.perform(get("/api/books/"))
@@ -85,16 +88,9 @@ public class BookControllerTest {
 
     @Test
     public void shouldAddBook() throws Exception {
-        Book testBook = new Book(
-                "Test Book",
-                "Test Author",
-                "Test Publish Date",
-                "Test ISBN"
-        );
-
         mockMvc.perform(post("/api/books")
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(asJsonString(testBook)))
+                .content(asJsonString(testBook1)))
                 .andExpect(status().isOk());
     }
 
@@ -106,16 +102,9 @@ public class BookControllerTest {
 
     @Test
     public void shouldUpdateBook() throws Exception {
-        Book testBook = new Book(
-                "Test Book",
-                "Test Author",
-                "Test Publish Date",
-                "Test ISBN"
-        );
-
         mockMvc.perform(put("/api/books/{id}", 0L)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(asJsonString(testBook)))
+                .content(asJsonString(testBook1)))
                 .andExpect(status().isOk());
     }
 

@@ -6,6 +6,7 @@ import com.scottlogic.dao.BookRepository;
 import com.scottlogic.domain.Book;
 import org.hamcrest.Matchers;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,25 @@ public class BookControllerIT {
     @Autowired
     private BookRepository bookRepository;
 
+    private Book testBook1;
+    private Book testBook2;
+
+    @Before
+    public void initialiseTestData() {
+        testBook1 = new Book(
+                "Test Book",
+                "Test Author",
+                "Test Publish Date",
+                "Test ISBN"
+        );
+        testBook2 = new Book(
+                "Test Book 2",
+                "Test Author 2",
+                "Test Publish Date 2",
+                "Test ISBN 2"
+        );
+    }
+
     @After
     public void tearDown() {
         bookRepository.deleteAll();
@@ -40,18 +60,6 @@ public class BookControllerIT {
 
     @Test
     public void shouldGetBookFromId() {
-        Book testBook1 = new Book(
-                "Test Book",
-                "Test Author",
-                "Test Publish Date",
-                "Test ISBN"
-        );
-        Book testBook2 = new Book(
-                "Test Book 2",
-                "Test Author 2",
-                "Test Publish Date 2",
-                "Test ISBN 2"
-        );
         bookRepository.save(testBook1);
         bookRepository.save(testBook2);
 
@@ -63,18 +71,6 @@ public class BookControllerIT {
 
     @Test
     public void shouldGetAllBooks() {
-        Book testBook1 = new Book(
-                "Test Book",
-                "Test Author",
-                "Test Publish Date",
-                "Test ISBN"
-        );
-        Book testBook2 = new Book(
-                "Test Book 2",
-                "Test Author 2",
-                "Test Publish Date 2",
-                "Test ISBN 2"
-        );
         bookRepository.save(testBook1);
         bookRepository.save(testBook2);
 
@@ -86,35 +82,21 @@ public class BookControllerIT {
 
     @Test
     public void shouldAddBook() {
-        Book testBook = new Book(
-                "Test Book",
-                "Test Author",
-                "Test Publish Date",
-                "Test ISBN"
-        );
-
-        final ResponseEntity<Void> response = restTemplate.postForEntity("/api/books", testBook, Void.class);
+        final ResponseEntity<Void> response = restTemplate.postForEntity("/api/books", testBook1, Void.class);
 
         assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
         final Optional<Book> repoBook = bookRepository.findByTitle("Test Book");
-        assertThat(repoBook.get().getTitle(), equalTo(testBook.getTitle()));
-        assertThat(repoBook.get().getAuthor(), equalTo(testBook.getAuthor()));
-        assertThat(repoBook.get().getPublishDate(), equalTo(testBook.getPublishDate()));
-        assertThat(repoBook.get().getIsbn(), equalTo(testBook.getIsbn()));
+        assertThat(repoBook.get().getTitle(), equalTo(testBook1.getTitle()));
+        assertThat(repoBook.get().getAuthor(), equalTo(testBook1.getAuthor()));
+        assertThat(repoBook.get().getPublishDate(), equalTo(testBook1.getPublishDate()));
+        assertThat(repoBook.get().getIsbn(), equalTo(testBook1.getIsbn()));
     }
 
     @Test
     public void shouldDeleteBook() {
-        Book testBook = new Book(
-                "Test Book",
-                "Test Author",
-                "Test Publish Date",
-                "Test ISBN"
-        );
+        bookRepository.save(testBook1);
 
-        bookRepository.save(testBook);
-
-        restTemplate.delete("/api/books/{id}", testBook.getId());
+        restTemplate.delete("/api/books/{id}", testBook1.getId());
 
         final Optional<Book> repoBook = bookRepository.findByTitle("Test Book");
         assertThat(repoBook.isPresent(), equalTo(false));
@@ -123,28 +105,15 @@ public class BookControllerIT {
 
     @Test
     public void shouldUpdateBook() {
-        Book oldBook = new Book(
-                "Old Book",
-                "Old Author",
-                "Old Publish Date",
-                "Old ISBN"
-        );
-        Book newBook = new Book(
-                "New Book",
-                "New Author",
-                "New Publish Date",
-                "New ISBN"
-        );
+        bookRepository.save(testBook1);
 
-        bookRepository.save(oldBook);
+        restTemplate.put("/api/books/{id}", testBook2, testBook1.getId());
 
-        restTemplate.put("/api/books/{id}", newBook, oldBook.getId());
-
-        final Optional<Book> repoBook = bookRepository.findById(oldBook.getId());
-        assertThat(repoBook.get().getTitle(), equalTo(newBook.getTitle()));
-        assertThat(repoBook.get().getAuthor(), equalTo(newBook.getAuthor()));
-        assertThat(repoBook.get().getPublishDate(), equalTo(newBook.getPublishDate()));
-        assertThat(repoBook.get().getIsbn(), equalTo(newBook.getIsbn()));
+        final Optional<Book> repoBook = bookRepository.findById(testBook1.getId());
+        assertThat(repoBook.get().getTitle(), equalTo(testBook2.getTitle()));
+        assertThat(repoBook.get().getAuthor(), equalTo(testBook2.getAuthor()));
+        assertThat(repoBook.get().getPublishDate(), equalTo(testBook2.getPublishDate()));
+        assertThat(repoBook.get().getIsbn(), equalTo(testBook2.getIsbn()));
 
     }
 

@@ -29,39 +29,55 @@ public class ReservationServiceImplTest {
 
     private ReservationService reservationService;
 
+    private Book testBook1;
+    private Book testBook2;
+    private Reservation testReservation1;
+    private Reservation testReservation2;
+    private Reservation testReservation3;
+
     @Before
     public void setUp() {
         reservationService = new ReservationServiceImpl(reservationRepository);
+        testBook1 = new Book(
+                "Test Book",
+                "Test Author",
+                "Test Publish Date",
+                "Test ISBN"
+        );
+        testBook2 = new Book(
+                "Test Book 2",
+                "Test Author 2",
+                "Test Publish Date 2",
+                "Test ISBN 2"
+        );
+        testReservation1 = new Reservation(
+                testBook1,
+                new Date(5000),
+                new Date(6000)
+        );
+        testReservation2 = new Reservation(
+                testBook2,
+                new Date(5000),
+                new Date(6000)
+        );
+        testReservation3 = new Reservation(
+                testBook2,
+                new Date(5500),
+                new Date(6500)
+        );
     }
 
     @Test
     public void shouldGetReservationById(){
-        Reservation testReservation = new Reservation(
-                2L,
-                new Date(),
-                new Date()
-        );
-
-        when(reservationRepository.findById(0L)).thenReturn(Optional.of(testReservation));
+        when(reservationRepository.findById(0L)).thenReturn(Optional.of(testReservation1));
 
         final Optional<Reservation> result = reservationService.getById(0L);
 
-        assertThat(result.get(), equalTo(testReservation));
+        assertThat(result.get(), equalTo(testReservation1));
     }
 
     @Test
     public void shouldGetAllReservations(){
-        Reservation testReservation1 = new Reservation(
-                2L,
-                new Date(),
-                new Date()
-        );
-        Reservation testReservation2 = new Reservation(
-                3L,
-                new Date(),
-                new Date()
-        );
-
         when(reservationRepository.findAll()).thenReturn(Arrays.asList(testReservation1, testReservation2));
 
         final Iterable<Reservation> result = reservationService.getAll();
@@ -71,32 +87,16 @@ public class ReservationServiceImplTest {
 
     @Test
     public void shouldAddReservation() {
-        Reservation testReservation = new Reservation(
-                2L,
-                new Date(),
-                new Date()
-        );
+        reservationService.add(testReservation1);
 
-        reservationService.add(testReservation);
-
-        verify(reservationRepository).save(testReservation);
+        verify(reservationRepository).save(testReservation1);
     }
 
     @Test (expected = IllegalArgumentException.class)
     public void shouldThrowExceptionIfBookAlreadyReserved() {
-        Reservation testReservation1 = new Reservation(
-                2L,
-                new Date(5000),
-                new Date(6000)
-        );
-        Reservation testReservation2 = new Reservation(
-                2L,
-                new Date(5500),
-                new Date(6500)
-        );
-        when(reservationRepository.findAll()).thenReturn(Arrays.asList(testReservation1));
+        when(reservationRepository.findAll()).thenReturn(Arrays.asList(testReservation2));
 
-        reservationService.add(testReservation2);
+        reservationService.add(testReservation3);
     }
 
     @Test
@@ -108,38 +108,21 @@ public class ReservationServiceImplTest {
 
     @Test
     public void shouldUpdateReservation() {
-        Reservation oldReservation = new Reservation(
-                0L,
-                new Date(5000),
-                new Date(5000)
-        );
+        when(reservationRepository.findById(0L)).thenReturn(Optional.of(testReservation1));
 
-        Reservation newReservation = new Reservation(
-                5L,
-                new Date(7000),
-                new Date(7000)
-        );
+        reservationService.update(0L, testReservation2);
 
-        when(reservationRepository.findById(0L)).thenReturn(Optional.of(oldReservation));
-
-        reservationService.update(0L, newReservation);
-
-        assertThat(oldReservation.getBookId(), equalTo(newReservation.getBookId()));
-        assertThat(oldReservation.getStartDate(), equalTo(newReservation.getStartDate()));
-        assertThat(oldReservation.getEndDate(), equalTo(newReservation.getEndDate()));
-        verify(reservationRepository).save(oldReservation);
+        assertThat(testReservation1.getBook(), equalTo(testReservation2.getBook()));
+        assertThat(testReservation1.getStartDate(), equalTo(testReservation2.getStartDate()));
+        assertThat(testReservation1.getEndDate(), equalTo(testReservation2.getEndDate()));
+        verify(reservationRepository).save(testReservation1);
     }
 
     @Test (expected = EntityNotFoundException.class)
     public void shouldThrowExceptionIfUpdateReservationNotFound() {
-        Reservation newReservation = new Reservation(
-                0L,
-                new Date(),
-                new Date()
-        );
         when(reservationRepository.findById(0L)).thenReturn(Optional.ofNullable(null));
 
-        reservationService.update(0L, newReservation);
+        reservationService.update(0L, testReservation1);
     }
 
 }
