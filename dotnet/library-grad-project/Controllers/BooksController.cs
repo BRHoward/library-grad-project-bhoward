@@ -10,6 +10,11 @@ namespace LibraryGradProject.Controllers
     {
         private IRepository<Book> _bookRepo;
         
+        public BooksController()
+        {
+
+        }
+
         public BooksController(IRepository<Book> bookRepository)
         {
             _bookRepo = bookRepository;

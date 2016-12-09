@@ -1,4 +1,6 @@
-﻿namespace LibraryGradProject.Models
+﻿using System.Collections.Generic;
+
+namespace LibraryGradProject.Models
 {
     public class Book
     {
@@ -7,6 +9,8 @@
         public string title { get; set; }
         public string author { get; set; }
         public string publishDate { get; set; }
+
+        public virtual ICollection<Reservation> reservations { get; set; }
 
         public override bool Equals(object obj)
         {
