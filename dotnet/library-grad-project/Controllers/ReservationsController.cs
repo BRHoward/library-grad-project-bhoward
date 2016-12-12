@@ -12,6 +12,11 @@ namespace LibraryGradProject.Controllers
     {
         private IRepository<Reservation> _reservationRepo;
 
+        public ReservationsController()
+        {
+
+        }
+
         public ReservationsController(IRepository<Reservation> reservationRepository)
         {
             _reservationRepo = reservationRepository;

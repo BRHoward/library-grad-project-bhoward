@@ -16,23 +16,12 @@ class ReservationSelector extends React.Component {
 			selectedBook : null
 		}
 		this.handleChange = this.handleChange.bind(this);
-		this.getRelevantReservations = this.getRelevantReservations.bind(this);
 	}
 
 	handleChange (event, index, value) {
 		this.setState({
 			selectedBook : value
 		})
-	}
-
-	getRelevantReservations(bookId) {
-		return this.props.reservations.items.filter(reservation => {
-			return reservation.bookId === bookId;
-		})
-	}
-
-	componentDidMount () {
-		this.props.fetchReservations();
 	}
 
 	render () {
@@ -51,7 +40,8 @@ class ReservationSelector extends React.Component {
 			</SelectField>
 			{this.state.selectedBook && 
 				<ReservationList
-					reservations={this.getRelevantReservations(this.state.selectedBook)}
+					reservations={this.props.books.items.filter(book => 
+						book.id === this.state.selectedBook)[0].reservations}
 					deleteReservation={this.props.deleteReservation}
 				/>
 			}

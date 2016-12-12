@@ -7,12 +7,13 @@ const margin = {
 	margin: 12,
 }
 
-
 class ReservationForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			bookId : this.props.bookId,
+			book : {
+				id : this.props.book.id
+			},
 			startDate : "",
 			endDate : "",
 			invalidInput : false
@@ -26,9 +27,8 @@ class ReservationForm extends React.Component {
 
 	invalidDate(date) {
 		let invalid = false;
-		this.props.reservations.items.forEach((reservation) => {
-			if(this.props.bookId === reservation.bookId 
-			&& date >= new Date(reservation.startDate)
+		this.props.book.reservations.forEach((reservation) => {
+			if(date >= new Date(reservation.startDate)
 			&& date <= new Date(reservation.endDate)) {
 				invalid = true;
 			}

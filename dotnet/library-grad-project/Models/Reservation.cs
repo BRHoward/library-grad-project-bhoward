@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,6 +13,9 @@ namespace LibraryGradProject.Models
         public int bookId { get; set; }
         public DateTime startDate { get; set; }
         public DateTime endDate { get; set; }
+
+        [ForeignKey("bookId")]
+        public virtual Book book { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -29,7 +34,7 @@ namespace LibraryGradProject.Models
 
             // Return true if the fields match:
             return
-                (bookId == p.bookId) &&
+                (book == p.book) &&
                 (startDate == p.startDate) &&
                 (endDate == p.endDate);
         }

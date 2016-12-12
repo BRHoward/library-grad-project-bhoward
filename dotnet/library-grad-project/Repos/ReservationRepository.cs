@@ -18,6 +18,18 @@ namespace LibraryGradProject.Repos
 
         public void Add(Reservation entity)
         {
+            Book relevantBook =_dbContext.Books
+                        .OrderBy(b => b.id)
+                        .Where(b => b.id == entity.book.id)
+                        .SingleOrDefault();
+
+            if(relevantBook == null)
+            {
+                throw new InvalidOperationException("That book doesn't exist");
+            }
+
+            entity.book = relevantBook;
+            
             if (reservationValid(entity))
             {
                 _dbContext.Reservations.Add(entity);
@@ -32,7 +44,9 @@ namespace LibraryGradProject.Repos
 
         public IEnumerable<Reservation> GetAll()
         {
-            return _dbContext.Reservations.OrderBy(r => r.id).ToList();
+            return _dbContext.Reservations
+                .OrderBy(r => r.id)
+                .ToList();
         }
 
         public Reservation Get(int id)
@@ -59,7 +73,7 @@ namespace LibraryGradProject.Repos
             }
             if (reservationToUpdate != null)
             {
-                reservationToUpdate.bookId = newReservation.bookId;
+                reservationToUpdate.book = newReservation.book;
                 reservationToUpdate.startDate = newReservation.startDate;
                 reservationToUpdate.endDate = newReservation.endDate;
                 _dbContext.SaveChanges();
@@ -76,7 +90,7 @@ namespace LibraryGradProject.Repos
 
             foreach (var res in _dbContext.Reservations.OrderBy(r => r.id).ToList())
             {
-                if (res.bookId == newReservation.bookId &&
+                if (res.book == newReservation.book &&
                     res.startDate < newReservation.endDate &&
                     newReservation.startDate < res.endDate)
                 {

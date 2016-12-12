@@ -1,6 +1,7 @@
 package com.scottlogic.dao;
 
 import com.scottlogic.domain.Book;
+import com.scottlogic.domain.Reservation;
 import org.hamcrest.Matchers;
 import org.junit.After;
 import org.junit.Before;
@@ -11,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.Optional;
 
@@ -25,6 +27,25 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @DataJpaTest
 public class BookRepositoryIT {
 
+    private Book testBook1;
+    private Book testBook2;
+
+    @Before
+    public void initialiseTestData() {
+        testBook1 = new Book(
+                "Test Book",
+                "Test Author",
+                "Test Publish Date",
+                "Test ISBN"
+        );
+        testBook2 = new Book(
+                "Test Book 2",
+                "Test Author 2",
+                "Test Publish Date 2",
+                "Test ISBN 2"
+        );
+    }
+
     @Autowired
     private BookRepository bookRepository;
 
@@ -38,51 +59,24 @@ public class BookRepositoryIT {
 
     @Test
     public void shouldGetById() {
-        Book testBook = new Book(
-                "Test Book",
-                "Test Author",
-                "Test Publish Date",
-                "Test ISBN"
-        );
+        entityManager.persist(testBook1);
 
-        entityManager.persist(testBook);
+        final Optional<Book> result = bookRepository.findById(testBook1.getId());
 
-        final Optional<Book> result = bookRepository.findById(testBook.getId());
-
-        assertThat(result.get(), equalTo(testBook));
+        assertThat(result.get(), equalTo(testBook1));
     }
 
     @Test
     public void shouldGetByTitle() {
-        Book testBook = new Book(
-                "Test Book",
-                "Test Author",
-                "Test Publish Date",
-                "Test ISBN"
-        );
+        entityManager.persist(testBook1);
 
-        entityManager.persist(testBook);
+        final Optional<Book> result = bookRepository.findByTitle(testBook1.getTitle());
 
-        final Optional<Book> result = bookRepository.findByTitle(testBook.getTitle());
-
-        assertThat(result.get(), equalTo(testBook));
+        assertThat(result.get(), equalTo(testBook1));
     }
 
     @Test
     public void shouldGetAll() {
-        Book testBook1 = new Book(
-                "Test Book",
-                "Test Author",
-                "Test Publish Date",
-                "Test ISBN"
-        );
-        Book testBook2 = new Book(
-                "Test Book 2",
-                "Test Author 2",
-                "Test Publish Date 2",
-                "Test ISBN 2"
-        );
-
         entityManager.persist(testBook1);
         entityManager.persist(testBook2);
 
@@ -92,35 +86,16 @@ public class BookRepositoryIT {
 
     @Test
     public void shouldAddBook() {
-        final Book testBook = new Book(
-                "Test Book",
-                "Test Author",
-                "Test Publish Date",
-                "Test ISBN"
-        );
 
-        bookRepository.save(testBook);
+        bookRepository.save(testBook1);
 
-        final Book result = entityManager.find(Book.class, testBook.getId());
-        assertThat(result, equalTo(testBook));
+        final Book result = entityManager.find(Book.class, testBook1.getId());
+        assertThat(result, equalTo(testBook1));
 
     }
 
     @Test
     public void shouldDeleteBook() {
-        Book testBook1 = new Book(
-                "Test Book",
-                "Test Author",
-                "Test Publish Date",
-                "Test ISBN"
-        );
-        Book testBook2 = new Book(
-                "Test Book 2",
-                "Test Author 2",
-                "Test Publish Date 2",
-                "Test ISBN 2"
-        );
-
         entityManager.persist(testBook1);
         entityManager.persist(testBook2);
 

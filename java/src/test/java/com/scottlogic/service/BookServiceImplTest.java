@@ -31,42 +31,37 @@ public class BookServiceImplTest {
 
     private BookService bookService;
 
+    private Book testBook1;
+    private Book testBook2;
+
     @Before
     public void setUp(){
         bookService = new BookServiceImpl(bookRepository);
-    }
-
-    @Test
-    public void shouldGetBookById(){
-        Book testBook = new Book(
+        testBook1 = new Book(
                 "Test Book",
                 "Test Author",
                 "Test Publish Date",
                 "Test ISBN"
         );
-
-        when(bookRepository.findById(0L)).thenReturn(Optional.of(testBook));
-
-        final Optional<Book> result = bookService.getById(0L);
-
-        assertThat(result.get(), equalTo(testBook));
-    }
-
-    @Test
-    public void shouldGetAllBooks(){
-        Book testBook1 = new Book(
-                "Test Book",
-                "Test Author",
-                "Test Publish Date",
-                "Test ISBN"
-        );
-        Book testBook2 = new Book(
+        testBook2 = new Book(
                 "Test Book 2",
                 "Test Author 2",
                 "Test Publish Date 2",
                 "Test ISBN 2"
         );
+    }
 
+    @Test
+    public void shouldGetBookById(){
+        when(bookRepository.findById(0L)).thenReturn(Optional.of(testBook1));
+
+        final Optional<Book> result = bookService.getById(0L);
+
+        assertThat(result.get(), equalTo(testBook1));
+    }
+
+    @Test
+    public void shouldGetAllBooks(){
         when(bookRepository.findAll()).thenReturn(Arrays.asList(testBook1, testBook2));
 
         final Iterable<Book> result = bookService.getAll();
@@ -76,13 +71,6 @@ public class BookServiceImplTest {
 
     @Test
     public void shouldAddBook() {
-        Book testBook1 = new Book(
-                "Test Book",
-                "Test Author",
-                "Test Publish Date",
-                "Test ISBN"
-        );
-
         bookService.add(testBook1);
 
         verify(bookRepository).save(testBook1);
@@ -97,42 +85,23 @@ public class BookServiceImplTest {
 
     @Test
     public void shouldUpdateBook() {
-        Book oldBook = new Book(
-                "Old Book",
-                "Old Author",
-                "Old Publish Date",
-                "Old ISBN"
-        );
-        Book newBook = new Book(
-                "New Book",
-                "New Author",
-                "New Publish Date",
-                "New ISBN"
-        );
 
-        when(bookRepository.findById(0L)).thenReturn(Optional.of(oldBook));
+        when(bookRepository.findById(0L)).thenReturn(Optional.of(testBook1));
 
-        bookService.update(0L, newBook);
+        bookService.update(0L, testBook2);
 
-        assertThat(oldBook.getTitle(), equalTo(newBook.getTitle()));
-        assertThat(oldBook.getAuthor(), equalTo(newBook.getAuthor()));
-        assertThat(oldBook.getPublishDate(), equalTo(newBook.getPublishDate()));
-        assertThat(oldBook.getIsbn(), equalTo(newBook.getIsbn()));
-        verify(bookRepository).save(oldBook);
+        assertThat(testBook1.getTitle(), equalTo(testBook2.getTitle()));
+        assertThat(testBook1.getAuthor(), equalTo(testBook2.getAuthor()));
+        assertThat(testBook1.getPublishDate(), equalTo(testBook2.getPublishDate()));
+        assertThat(testBook1.getIsbn(), equalTo(testBook2.getIsbn()));
+        verify(bookRepository).save(testBook1);
     }
 
     @Test (expected=EntityNotFoundException.class)
     public void shouldThrowExceptionIfUpdateBookNotFound() {
-        Book newBook = new Book(
-                "New Book",
-                "New Author",
-                "New Publish Date",
-                "New ISBN"
-        );
-
         when(bookRepository.findById(0L)).thenReturn(Optional.ofNullable(null));
 
-        bookService.update(0L, newBook);
+        bookService.update(0L, testBook1);
     }
 
 }

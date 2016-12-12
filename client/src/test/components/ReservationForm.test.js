@@ -16,11 +16,16 @@ describe('<ReservationForm />', () => {
 	injectTapEventPlugin();
 
 	const testBook = {
-		id : 0,
+		id : 2,
 		title : "Test Book",
 		author : "Test Author",
 		publishDate : "Test Date",
-		isbn : "Test ISBN"
+		isbn : "Test ISBN",
+		reservations : [{
+			id : 1,
+			startDate : "01-01-2001",
+			endDate  : "01-03-2001"
+		}]
 	}
 
 	const testReservationsItems = [
@@ -46,26 +51,29 @@ describe('<ReservationForm />', () => {
 
 	it('renders without crashing', () => {
 	  	shallow(<ReservationForm
-	  		open={true}/>);
+	  		open={true}
+	  		book={testBook}/>);
 	});
 
 	it('renders a <Dialog/>', () => {
 	  	const reservationForm = shallow(<ReservationForm
-	  		open={true}/>);
+	  		open={true}
+	  		book={testBook}/>);
 		expect(reservationForm.find(Dialog).length).toBe(1);
 	});
 
 	it('renders two <DatePicker/>s', () => {
 	  	const reservationForm = shallow(<ReservationForm
-	  		open={true}/>);
+	  		open={true}
+	  		book={testBook}/>);
 		expect(reservationForm.find(DatePicker).length).toBe(2);
 	});
 
 	it('correctly sets state based on props', () => {
 	  	const reservationForm = shallow(<ReservationForm
 	  		open={true}
-	  		bookId={2}/>);
-	  	expect(reservationForm.state().bookId).toBe(2);
+	  		book={testBook}/>);
+	  	expect(reservationForm.state().book.id).toBe(2);
 	  	expect(reservationForm.state().startDate).toBe("");
 	  	expect(reservationForm.state().endDate).toBe("");
 	  	expect(reservationForm.state().invalidInput).toBe(false);
@@ -75,7 +83,7 @@ describe('<ReservationForm />', () => {
 		const reservationForm = mount(
 		  		<ReservationForm 
 		  		open={true} 
-		  		bookId={0}
+		  		book={testBook}
 		  		onSubmit={sinon.spy()}
 		  		/>, {
 		  			context: {muiTheme},
@@ -93,7 +101,9 @@ describe('<ReservationForm />', () => {
 	  		preventDefault : () => {}
 	  	});
 	  	expect(reservationForm.props().onSubmit.calledWith({
-	  		bookId: 0,
+	  		book: {
+	  			id : 2
+	  		},
 	  		startDate: datesToSet.startDate,
 	  		endDate: datesToSet.endDate,
 	  		invalidInput: false
@@ -106,7 +116,7 @@ describe('<ReservationForm />', () => {
 		const reservationForm = mount(
 		  		<ReservationForm 
 		  			open={true} 
-		  			bookId={0}
+		  			book={testBook}
 		  		/>, {
 		  			context: {muiTheme},
 		  			childContextTypes:{muiTheme: React.PropTypes.object}
@@ -127,7 +137,7 @@ describe('<ReservationForm />', () => {
 		const reservationForm = mount(
 		  		<ReservationForm 
 		  			open={true} 
-		  			bookId={0}
+		  			book={testBook}
 		  		/>, {
 		  			context: {muiTheme},
 		  			childContextTypes:{muiTheme: React.PropTypes.object}
@@ -148,9 +158,8 @@ describe('<ReservationForm />', () => {
 		const reservationForm = mount(
 		  		<ReservationForm 
 		  			open={true} 
-		  			bookId={5}
+		  			book={testBook}
 		  			toggle={sinon.spy()}
-		  			reservations={testReservations}
 		  		/>, {
 		  			context: {muiTheme},
 		  			childContextTypes:{muiTheme: React.PropTypes.object}
@@ -166,9 +175,8 @@ describe('<ReservationForm />', () => {
 		const reservationForm = mount(
 		  		<ReservationForm 
 		  			open={true} 
-		  			bookId={5}
+		  			book={testBook}
 		  			toggle={sinon.spy()}
-		  			reservations={testReservations}
 		  		/>, {
 		  			context: {muiTheme},
 		  			childContextTypes:{muiTheme: React.PropTypes.object}
